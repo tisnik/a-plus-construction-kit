@@ -25,7 +25,7 @@
 
 
 (defn render-select-app-page
-    "Render front page of this application."
+    "Render front page of this application with the selection of application type."
     [app-types]
     (page/xhtml
         (widgets/header "/" {:include-calendar? true})
@@ -48,6 +48,7 @@
 ))
 
 (defn render-select-language-page
+    "Render the page with the selection of language or languages to use for the app."
     [app-type app-type-label app-parts app-languages]
     (page/xhtml
         (widgets/header "/" {:include-calendar? true})

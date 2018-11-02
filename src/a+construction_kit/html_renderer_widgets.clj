@@ -72,21 +72,25 @@
 
 
 (defn back-button
+    "Back button widget."
     []
-    [:button {:class "btn btn-primary" :onclick "window.history.back()" :type "button"} "Zpět"])
+    [:button {:class "btn btn-primary" :onclick "window.history.back()" :type "button"} "Back"])
 
 
 (defn submit-button
+    "Submit button widget."
     [text name value]
     [:button {:type "submit" :name name :value value :class "btn btn-success" :style "width:12em"} text])
 
 
 (defn disabled-submit-button
+    "Disabled submit button widget."
     [text name value]
     [:button {:type "submit" :id name :name name :value value :class "btn btn-success" :style "width:12em" :disabled "disabled"} text])
 
 
 (defn radio-button
+    "Radio button widget."
     ([group checked value label]
         [:span (form/radio-button group checked value)
                " " label
@@ -97,5 +101,6 @@
                [:br]]))
 
 (defn help-button
+    "Help button widget."
     [help-page-url]
     [:a {:href help-page-url} [:img {:src "icons/help.gif"}]])
