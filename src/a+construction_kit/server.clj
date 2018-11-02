@@ -19,9 +19,10 @@
 
 (require '[clj-fileutils.fileutils :as fileutils])
 
-(require '[a+construction-kit.html-renderer      :as html-renderer])
-(require '[a+construction-kit.config             :as config])
-(require '[a+construction-kit.http-utils         :as http-utils])
+(require '[a+construction-kit.html-renderer :as html-renderer])
+(require '[a+construction-kit.config        :as config])
+(require '[a+construction-kit.http-utils    :as http-utils])
+(require '[a+construction-kit.model         :as model])
 
 (use     '[clj-utils.utils])
 
@@ -41,15 +42,41 @@
                 (http-response/content-type "text/html; charset=utf-8")))))
 
 
-(defn process-front-page
+(defn process-select-app-page
     "Function that prepares data for the front page."
     [request]
-    (finish-processing request (html-renderer/render-front-page)))
+    (finish-processing request (html-renderer/render-select-app-page model/app-types)))
 
+
+(defn app-type-name->label
+    [app-types app-type-name]
+    (-> (filter #(= (:name %) app-type-name) app-types)
+        first
+        :label))
+
+
+(defn process-select-language-page
+    [request]
+    (let [params         (:params request)
+          app-type       (get params "app-type")
+          app-type-label (app-type-name->label model/app-types app-type)
+          app-parts      (get model/app-parts app-type)
+          app-languages  (get model/app-languages app-type)]
+          (println app-type)
+          (println app-type-label)
+          (println app-parts)
+          (println app-languages)
+          (finish-processing request (html-renderer/render-select-language-page app-type app-type-label app-parts app-languages))))
+
+
+(defn process-configure-modules-page
+    [request]
+    )
 
 (defn uri->file-name
     [uri]
     (subs uri (inc (.indexOf uri "/"))))
+
 
 (defn gui-call-handler
     "This function is used to handle all GUI calls. Three parameters are expected:
@@ -65,7 +92,9 @@
           :else
         (condp = uri
             ; common pages
-            "/"                           (process-front-page request)
+            "/"                           (process-select-app-page request)
+            "/select-language"            (process-select-language-page request)
+            "/configure-modules"          (process-configure-modules-page request)
             )))
 
 (defn handler
