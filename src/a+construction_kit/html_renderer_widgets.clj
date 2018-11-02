@@ -30,8 +30,8 @@
         [:meta {:name "Generator" :content "Clojure"}]
         [:meta {:http-equiv "Content-type" :content "text/html; charset=utf-8"}]
         (page/include-css (str url-prefix "bootstrap/bootstrap.min.css"))
-        (page/include-css (str url-prefix "chainring.css"))
-        (page/include-css (str url-prefix "calendar.css"))
+        (page/include-css (str url-prefix "style.css"))
+        (page/include-js  (str url-prefix "script.js"))
     ] ; head
 )
 
@@ -68,13 +68,33 @@
 (defn footer
     "Renders part of HTML page - the footer."
     []
-    [:div "<br /><br />&copy; Pavel Tisnovsky"])
+    [:div "<br /><br />&copy; Pavel Tisnovsky, Red Hat"])
 
 
 (defn back-button
     []
     [:button {:class "btn btn-primary" :onclick "window.history.back()" :type "button"} "Zpět"])
 
+
+(defn submit-button
+    [text name value]
+    [:button {:type "submit" :name name :value value :class "btn btn-success" :style "width:12em"} text])
+
+
+(defn disabled-submit-button
+    [text name value]
+    [:button {:type "submit" :id name :name name :value value :class "btn btn-success" :style "width:12em" :disabled "disabled"} text])
+
+
+(defn radio-button
+    ([group checked value label]
+        [:span (form/radio-button group checked value)
+               " " label
+               [:br]])
+    ([group checked value label on-click]
+        [:span (form/radio-button {:onclick on-click} group checked value)
+               " " label
+               [:br]]))
 
 (defn help-button
     [help-page-url]
