@@ -28,7 +28,7 @@
     "Render front page of this application with the selection of application type."
     [app-types]
     (page/xhtml
-        (widgets/header "/" {:include-calendar? true})
+        (widgets/header "/" {:include-raphael false})
         [:body
             [:div {:class "container"}
                 (widgets/navigation-bar "/")
@@ -47,15 +47,19 @@
         ] ; </body>
 ))
 
+(defn render-app-type
+    [app-type]
+    (.toLowerCase app-type))
+
 (defn render-select-language-page
     "Render the page with the selection of language or languages to use for the app."
     [app-type app-type-label app-parts app-languages]
     (page/xhtml
-        (widgets/header "/" {:include-calendar? true})
+        (widgets/header "/" {:include-raphael false})
         [:body
             [:div {:class "container"}
                 (widgets/navigation-bar "/")
-                [:h3 "Language selection for " app-type-label]
+                [:h3 "Language selection for " (render-app-type app-type-label)]
                 [:br]
                 (form/form-to {:name "inputForm"} [:get "/configure-modules"]
                     [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
@@ -70,8 +74,53 @@
                             (widgets/radio-button "primary-language" false language language "enable_next_button()")))
                         [:br]
                         (widgets/disabled-submit-button "Next" "next" "next"))
+                        [:br]
+                        (widgets/back-button)
                 [:div {:style "height: 10ex"}]
                 (widgets/footer)
+            ] ; </div class="container">
+        ] ; </body>
+))
+
+
+(defn render-languages
+    [languages]
+    (println languages)
+    (if (get languages "primary-language")
+        (get languages "primary-language")
+        (str (get languages "Front end-language") " and " (get languages "Back end-language"))))
+
+
+(defn render-configure-modules-form
+    []
+    (form/form-to {:name "inputForm"} [:post "/generate-source"]
+    [:table {:border 1}
+        [:tr [:td "x"]]
+    ]
+    ))
+
+
+(defn render-configure-modules-page
+    [app-type app-type-label languages]
+    (page/xhtml
+        (widgets/header "/" {:include-raphael true})
+        [:body
+            [:div {:class "container" :style "width:90%"}
+                (widgets/navigation-bar "/")
+                [:h3 "Modules for " (render-app-type app-type-label) " written in " (render-languages languages)]
+                [:br]
+                [:div {:class "row"}
+                    [:div {:class "column"}
+                        (widgets/canvas)]
+                    [:div {:class "column"}
+                        (render-configure-modules-form)]
+                ]
+                [:div {:style "height: 5ex"}]
+                (widgets/footer)
+                [:script "window.onload = function() {
+                              createPaper(640, 640);
+                              drawAppSchema(paper);
+                          }"]
             ] ; </div class="container">
         ] ; </body>
 ))
