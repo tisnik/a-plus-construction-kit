@@ -19,9 +19,10 @@
 
 (require '[clj-fileutils.fileutils :as fileutils])
 
+(require '[clj-http-utils.http-utils :as http-utils])
+
 (require '[a+construction-kit.html-renderer :as html-renderer])
 (require '[a+construction-kit.config        :as config])
-(require '[a+construction-kit.http-utils    :as http-utils])
 (require '[a+construction-kit.model         :as model])
 
 (use     '[clj-utils.utils])
