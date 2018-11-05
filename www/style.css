@@ -1,0 +1,86 @@
+body {
+    padding-top: 100px;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover, 
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: black;
+    background-color: #a0a0a0;
+    font-size: 150%;
+}
+.navbar-inverse .navbar-nav > li a,
+.navbar-inverse .navbar-nav > li > a:hover, 
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: white;
+    /* background-color: #a0a0a0; */
+    font-size: 150%;
+}
+
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 1200px) {
+  body { padding-top: 100px; }
+}
+
+@media (max-width: 992px) {
+  body { padding-top: 160px; }
+}
+
+@media (max-width: 768px) {
+  body { padding-top: 240px; }
+}
+
+.color-box {
+    width: 22px;
+    height: 22px;
+    border: 1px solid black;
+    margin-right: 5px;
+    //vertical-align: middle;
+}
+
+.color-box-text {
+    margin-right: 5px;
+    font-size: 90%;
+    //vertical-align: middle;
+}
+
+.tools {
+    padding-top:4px;
+    padding-bottom:4px;
+    padding-left:8px;
+    background-repeat:no-repeat;
+    background-position: right center;
+    height:40px;
+}
+
+.tools-spacer {
+    width:2em;
+    display:inline-block;
+}
+
+.vcell {
+    vertical-align: top;
+    font-size: 90%;
+}
+
+.mcell {
+    vertical-align: center;
+    font-size: 90%;
+}
+
+#canvas_container {
+    width: 640px;
+    border: 1px solid #aaa;
+}
+
+.column {
+    float: left;
+    padding-left: 2ex;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
