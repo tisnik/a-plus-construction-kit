@@ -55,6 +55,12 @@
         :label))
 
 
+(defn read-languages
+    [params]
+    (->> (filter #(.endsWith (key %) "-language") params)
+         (into {})))
+
+
 (defn process-select-language-page
     [request]
     (let [params         (:params request)
@@ -62,16 +68,18 @@
           app-type-label (app-type-name->label model/app-types app-type)
           app-parts      (get model/app-parts app-type)
           app-languages  (get model/app-languages app-type)]
-          (println app-type)
-          (println app-type-label)
-          (println app-parts)
-          (println app-languages)
           (finish-processing request (html-renderer/render-select-language-page app-type app-type-label app-parts app-languages))))
 
 
 (defn process-configure-modules-page
     [request]
-    )
+    (let [params         (:params request)
+          app-type       (get params "app-type")
+          app-type-label (app-type-name->label model/app-types app-type)
+          languages      (read-languages params)]
+          (println params)
+          (println languages)
+          (finish-processing request (html-renderer/render-configure-modules-page app-type app-type-label languages))))
 
 (defn uri->file-name
     [uri]
