@@ -31,6 +31,8 @@
         [:meta {:http-equiv "Content-type" :content "text/html; charset=utf-8"}]
         (page/include-css (str url-prefix "bootstrap/bootstrap.min.css"))
         (page/include-css (str url-prefix "style.css"))
+        (if (and options (:include-raphael options))
+            (page/include-js  (str url-prefix "raphael/raphael.min.js")))
         (page/include-js  (str url-prefix "script.js"))
     ] ; head
 )
@@ -74,7 +76,7 @@
 (defn back-button
     "Back button widget."
     []
-    [:button {:class "btn btn-primary" :onclick "window.history.back()" :type "button"} "Back"])
+    [:button {:class "btn btn-primary" :onclick "window.history.back()" :type "button" :style "width:12em"} "Back"])
 
 
 (defn submit-button
@@ -104,3 +106,9 @@
     "Help button widget."
     [help-page-url]
     [:a {:href help-page-url} [:img {:src "icons/help.gif"}]])
+
+
+(defn canvas
+    []
+    [:div {:id "canvas_container"}])
+
