@@ -28,11 +28,34 @@
     {"web-application" ["Back end" "Front end"]})
 
 (def app-languages
-    {"microservice"       ["Java" "Python" "JavaScript" "TypeScript"]
+    {"microservice"       ["Java" "Python" "JavaScript" "TypeScript" "Go"]
      "web-application" {"Back end"
-                          ["Java" "Python" "JavaScript" "TypeScript"]
+                          ["Java" "Python" "JavaScript" "TypeScript" "Go"]
                         "Front end"
                           ["JavaScript" "TypeScript"]}
-     "openshift-cron-job" ["Java" "Python" "JavaScript" "TypeScript" "BASH"]
-     "desktop"            ["Java" "Python" "C" "C++"]
-     "cli-tool"           ["Java" "Python" "C" "C++" "BASH"]})
+     "openshift-cron-job" ["Java" "Python" "JavaScript" "TypeScript" "Go" "BASH"]
+     "desktop"            ["Java" "Python" "C" "C++" "Go"]
+     "cli-tool"           ["Java" "Python" "C" "C++" "Go" "BASH"]})
+
+(def configurations
+    {"microservice" ["Web service framework"
+                     "Data storage"
+                     "Message queuing service"
+                     "Other interfaces"
+                     "Libraries"]})
+
+(def subgroups
+    {"Data storage"     ["Relational database"
+                         "Key-value database"
+                         "Document-oriented database"
+                         "Graph database"
+                         "Other NoSQL database"]
+     "Other interfaces" ["Information system"
+                         "CI"]
+     "Libraries"        ["Logging"]
+})
+
+(def config-values
+    {"Python" {"Web service framework" ["Flask" "web.py" "Bottle"]
+               "Logging"               ["logging" "logging2" "fastlog"]
+    }})
