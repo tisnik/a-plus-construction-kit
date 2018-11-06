@@ -74,13 +74,14 @@
 
 (defn process-configure-modules-page
     [request]
-    (let [params         (:params request)
-          app-type       (get params "app-type")
-          app-type-label (app-type-name->label model/app-types app-type)
-          languages      (read-languages params)]
-          (println params)
-          (println languages)
-          (finish-processing request (html-renderer/render-configure-modules-page app-type app-type-label languages))))
+    (let [params             (:params request)
+          app-type           (get params "app-type")
+          app-type-label     (app-type-name->label model/app-types app-type)
+          languages          (read-languages params)
+          configurations     (get model/configurations app-type)
+          subgroups          model/subgroups
+          config-values      model/config-values]
+          (finish-processing request (html-renderer/render-configure-modules-page app-type app-type-label languages configurations subgroups config-values))))
 
 (defn uri->file-name
     [uri]

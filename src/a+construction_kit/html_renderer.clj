@@ -92,7 +92,7 @@
 
 
 (defn render-configure-modules-form
-    []
+    [app-type languages configurations subgroups config-values]
     (form/form-to {:name "inputForm"} [:post "/generate-source"]
     [:table {:border 1}
         [:tr [:td "x"]]
