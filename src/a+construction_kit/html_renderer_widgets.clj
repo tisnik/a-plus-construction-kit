@@ -33,7 +33,7 @@
         (page/include-css (str url-prefix "style.css"))
         (if (and options (:include-raphael options))
             (page/include-js  (str url-prefix "raphael/raphael.min.js")))
-        (page/include-js  (str url-prefix "script.js"))
+        (page/include-js  (str url-prefix "a_plus_construction_kit.js"))
     ] ; head
 )
 
