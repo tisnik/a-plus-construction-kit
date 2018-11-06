@@ -85,6 +85,18 @@
     [:button {:type "submit" :name name :value value :class "btn btn-success" :style "width:12em"} text])
 
 
+(defn add-button
+    "Add button widget."
+    [onclick]
+    [:button {:type "button" :class "add_button" :style "width:7em" :onclick onclick} "Add"])
+
+
+(defn remove-button
+    "Add button widget."
+    [onclick]
+    [:button {:type "button" :class "remove_button" :style "width:7em" :onclick onclick} "Remove"])
+
+
 (defn disabled-submit-button
     "Disabled submit button widget."
     [text name value]
