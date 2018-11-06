@@ -84,3 +84,18 @@ body {
     display: table;
     clear: both;
 }
+
+.select {
+    background-color: white;
+    height:30px;
+}
+
+.add_button {
+    background-color: #80e080;
+    height:30px;
+}
+
+.remove_button {
+    background-color: #e08080;
+    height:30px;
+}
