@@ -20,6 +20,9 @@
 (require '[hiccup.page  :as page])
 (require '[hiccup.form  :as form])
 
+(require '[clojure.data.json :as json])
+
+
 (require '[a+construction-kit.html-renderer-widgets :as widgets])
 
 
@@ -91,17 +94,47 @@
         (str (get languages "Front end-language") " and " (get languages "Back end-language"))))
 
 
+(defn configuration->id
+    [value]
+    (clojure.string/lower-case (clojure.string/replace value '\space \_)))
+
+
+(defn render-microservice-config
+    [language configurations subgroups config-values]
+    (let [cfg-values (get config-values language)]
+        [:table
+            (for [configuration configurations]
+                (if (get subgroups configuration)
+                    [:tgroup
+                        [:tr [:th [:h4 configuration]]]
+                        (for [group (get subgroups configuration)]
+                            (let [drop-down-id     (configuration->id group)
+                                  drop-down-values (get cfg-values group)]
+                                [:tr [:td {:style "padding-right:2em;"} group]
+                                     [:td (form/drop-down {:id drop-down-id :class "select"} drop-down-id drop-down-values)]
+                                     [:td (widgets/add-button    (str "onAddApplicationPart('" language "', '" configuration "', '" drop-down-id "')"))]
+                                     [:td (widgets/remove-button (str "onRemoveApplicationPart('" language "', '" configuration "', '" drop-down-id "')"))]]))
+                    ]
+                (let [drop-down-id     (configuration->id configuration)
+                      drop-down-values (get cfg-values configuration)]
+                    [:tr [:th {:style "padding-right:2em;"} [:h4 configuration]]
+                         [:td (form/drop-down {:id drop-down-id :class "select"} drop-down-id drop-down-values)]
+                         [:td (widgets/add-button    (str "onAddApplicationPart('" language "', '" configuration "', '" drop-down-id "')"))]
+                         [:td (widgets/remove-button (str "onRemoveApplicationPart('" language "', '" configuration "', '" drop-down-id "')"))]])))
+        ]))
+
+
 (defn render-configure-modules-form
     [app-type languages configurations subgroups config-values]
     (form/form-to {:name "inputForm"} [:post "/generate-source"]
-    [:table {:border 1}
-        [:tr [:td "x"]]
-    ]
-    ))
+    (condp = app-type
+        "microservice"
+        (render-microservice-config (get languages "primary-language") configurations subgroups config-values)
+    )))
 
 
 (defn render-configure-modules-page
-    [app-type app-type-label languages]
+    [app-type app-type-label languages configurations subgroups config-values]
     (page/xhtml
         (widgets/header "/" {:include-raphael true})
         [:body
@@ -113,14 +146,16 @@
                     [:div {:class "column"}
                         (widgets/canvas)]
                     [:div {:class "column"}
-                        (render-configure-modules-form)]
+                        (render-configure-modules-form app-type languages configurations subgroups config-values)]
                 ]
                 [:div {:style "height: 5ex"}]
                 (widgets/footer)
-                [:script "window.onload = function() {
-                              createPaper(640, 640);
-                              drawAppSchema(paper);
-                          }"]
+                (let [langs-json (json/write-str languages)]
+                    [:script (str "window.onload = function() {
+                                  createPaper(640, 640);
+                                  drawAppSchema(paper, " langs-json ");
+                              }")]
+                )
             ] ; </div class="container">
         ] ; </body>
 ))
