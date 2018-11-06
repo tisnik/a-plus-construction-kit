@@ -13,6 +13,24 @@ function languagePartSelected(part, app_parts) {
     }
 }
 
+function onSelectPrimaryLanguageIcon(language) {
+    var id = "primary-language" + "-" + language;
+    var element = document.getElementById(id);
+    if (element != null) {
+        element.checked = true;
+        enableNextButton();
+    }
+}
+
+function onSelectLanguagePartIcon(part, language, app_parts) {
+    var id = part + "-language" + "-" + language;
+    var element = document.getElementById(id);
+    if (element != null) {
+        element.checked = true;
+    }
+    languagePartSelected(part, app_parts);
+}
+
 var paper = null;
 
 function createPaper(width, height) {
