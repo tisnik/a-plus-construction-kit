@@ -54,6 +54,10 @@
     [app-type]
     (.toLowerCase app-type))
 
+(defn language-icon
+    [language]
+    (str "languages/64x64/" language ".png"))
+
 (defn render-select-language-page
     "Render the page with the selection of language or languages to use for the app."
     [app-type app-type-label app-parts app-languages]
@@ -71,10 +75,16 @@
                             [:span
                                 [:h4 part]
                                 (for [language (get app-languages part)]
-                                    (widgets/radio-button (str part "-language") false language language (str "language_part_selected('" part "'," (count app-parts) ")")))
+                                    [:span
+                                        [:a {:href (str "javascript:onSelectLanguagePartIcon('" part "', '" language "', "(count app-parts)")")} [:img {:src (language-icon language) :style "margin-right:10px"}]]
+                                        (widgets/radio-button (str part "-language") false language language (str "languagePartSelected('" part "'," (count app-parts) ")"))
+                                    ])
                                 [:br]])
                         (for [language app-languages]
-                            (widgets/radio-button "primary-language" false language language "enable_next_button()")))
+                            [:span
+                                [:a {:href (str "javascript:onSelectPrimaryLanguageIcon('" language "')")} [:img {:src (language-icon language) :style "margin-right:10px"}]]
+                                (widgets/radio-button "primary-language" false language language "enableNextButton()")
+                            ]))
                         [:br]
                         (widgets/disabled-submit-button "Next" "next" "next"))
                         [:br]
