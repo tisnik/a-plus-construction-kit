@@ -87,14 +87,16 @@
 
 (defn add-button
     "Add button widget."
-    [onclick]
-    [:button {:type "button" :class "add_button" :style "width:7em" :onclick onclick} "Add"])
+    [language configuration drop-down-id]
+    (let [onclick (str "onAddApplicationPart('" language "', '" configuration "', '" drop-down-id "')")]
+        [:button {:type "button" :class "add_button" :style "width:7em" :onclick onclick} "Add"]))
 
 
 (defn remove-button
     "Add button widget."
-    [onclick]
-    [:button {:type "button" :class "remove_button" :style "width:7em" :onclick onclick} "Remove"])
+    [language configuration drop-down-id]
+    (let [onclick (str "onRemoveApplicationPart('" language "', '" configuration "', '" drop-down-id "')")]
+        [:button {:type "button" :class "remove_button" :style "width:7em" :onclick onclick} "Remove"]))
 
 
 (defn disabled-submit-button
@@ -124,3 +126,6 @@
     []
     [:div {:id "canvas_container"}])
 
+(defn drop-down
+    [drop-down-id drop-down-values]
+    (form/drop-down {:id drop-down-id :class "select"} drop-down-id drop-down-values))
