@@ -52,11 +52,22 @@
                          "Other NoSQL database"]
      "Other interfaces" ["Information system"
                          "CI"]
-     "Libraries"        ["Logging"]
+     "Libraries"        ["Logging" "Networking" "Image manipulation" "Plotting"]
 })
 
 ;
 (def config-values
-    {"Python" {"Web service framework" ["Flask" "web.py" "Bottle"]
-               "Logging"               ["logging" "logging2" "fastlog"]
-    }})
+    {"Python" {"Web service framework"      ["Flask" "web.py" "Bottle"]
+               "Relational database"        ["DB/2" "Oracle RDBMS" "PostgreSQL" "MariaDB/MySQL" "SQLite" "ODBC"]
+               "Key-value database"         ["Dynamo", "Oracle NoSQL Database" "memcached" "Redis" "Berkeley DB"]
+               "Document-oriented database" ["Caché" "CouchDB" "MongoDB"]
+               "Graph database"             ["JanusGraph" "Neo4j" "Oracle Spatial and Graph"]
+               "Other NoSQL database"       ["BaseX" "eXist" "Sedna"]
+               "Message queuing service"    ["Microsoft Azure Service Bus" "Oracle Messaging Cloud Service" "Amazon Simple Queue Service" "IronMQ" "StormMQ" "AnypointMQ"]
+               "Information system"         ["SAP" "WordPress" "Joomla" "Drupal" "Google Maps" "Yahoo Maps"]
+               "CI"                         ["Jenkins" "Buildbot" "Travis CI"]
+               "Logging"                    ["logging" "logging2" "fastlog"]     
+               "Image manipulation"         ["Pillow"]
+               "Networking"                 ["asyncoro" "Gevent" "TwistedMatrix" "RPyC" "PyRO"]
+               "Plotting"                   ["gnuplot.py" "Matplotlib"]
+    }})                                                                          
