@@ -31,6 +31,11 @@ function onSelectLanguagePartIcon(part, language, app_parts) {
     languagePartSelected(part, app_parts);
 }
 
+function readDropDownValue(drop_down_id) {
+    var drop_down = document.getElementById(drop_down_id);
+    return drop_down.options[drop_down.selectedIndex].value;
+}
+
 var paper = null;
 
 function createPaper(width, height) {
@@ -46,17 +51,17 @@ function drawAppSchemaWithOneLanguage(paper, language) {
     paper.rect(paper.width/2 - 64, paper.height/2 - 64, 128, 128).attr("stroke", "#088");
 }
 
-function drawAppSchemaWithTwoLanguages(paper, languages) {
+function drawAppSchemaWithTwoLanguages(paper, app_type, languages) {
     var circle = paper.circle(100, 100, 80);
 }
 
-function drawAppSchema(paper, languages) {
+function drawAppSchema(paper, app_type, languages) {
     if ("primary-language" in languages) {
         var primary_language = languages["primary-language"];
-        drawAppSchemaWithOneLanguage(paper, primary_language);
+        drawAppSchemaWithOneLanguage(paper, app_type, primary_language);
     }
     else {
-        drawAppSchemaWithTwoLanguages(paper, languages);
+        drawAppSchemaWithTwoLanguages(paper, app_type, languages);
     }
 }
 
@@ -69,9 +74,7 @@ function deleteDrawnObject(paper, selector) {
     paper.drawn[selector] = null;
 }
 
-function onFrameworkAdd() {
-    var listbox = document.getElementById("web_service_framework");
-    var selected = listbox.options[listbox.selectedIndex].value;
+function onFrameworkAdd()selected {
     if (selected == null) {
         return;
     }
@@ -90,20 +93,16 @@ function onFrameworkRemove() {
 }
 
 function onAddApplicationPart(language, configuration, drop_down_id) {
-    //alert("ADD");
-    //alert(language);
-    //alert(configuration);
-    //alert(drop_down_id);
+    var value = readDropDownValue(drop_down_id);
+
     if (configuration == "Web service framework") {
-        onFrameworkAdd();
+        onFrameworkAdd(value);
     }
 }
 
 function onRemoveApplicationPart(language, configuration, drop_down_id) {
-    //alert("REMOVE");
-    //alert(language);
-    //alert(configuration);
-    //alert(drop_down_id);
+    var value = readDropDownValue(drop_down_id);
+
     if (configuration == "Web service framework") {
         onFrameworkRemove();
     }
