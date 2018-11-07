@@ -36,6 +36,18 @@ function readDropDownValue(drop_down_id) {
     return drop_down.options[drop_down.selectedIndex].value;
 }
 
+function wrapLongString(str, max) {
+    if (str.length > 12) {
+        var i = str.indexOf(" ", 12);
+        if (i > -1) {
+            var s1 = str.substring(0, i).trim();
+            var s2 = str.substring(i).trim();
+            return s1 + "\n" + s2;
+        }
+    }
+    return str;
+}
+
 // drawing-related part
 
 var MAX_DATABASES = 7;
@@ -143,8 +155,8 @@ function deleteDrawnObject(paper, selector) {
 
 // event handlers
 
-function onFrameworkAdd(selected) {
-    if (selected == null) {
+function onFrameworkAdd(value) {
+    if (value == null) {
         return;
     }
 
@@ -155,7 +167,7 @@ function onFrameworkAdd(selected) {
     drawn = paper.drawn["web_service_framework"] = [];
     drawn.push(paper.path("M320,256L320,92").attr("stroke-dasharray", "--").attr("stroke", "gray").attr("stroke-width", "2").attr("arrow-end", "block-wide-long"));
     drawn.push(paper.rect(paper.width/2 - 64, 140, 128, 64).attr("stroke", "#088").attr("fill", "white"));
-    drawn.push(paper.text(paper.width/2, 172, selected).attr("font-size", 16));
+    drawn.push(paper.text(paper.width/2, 172, value).attr("font-size", 16));
 }
 
 function onFrameworkRemove() {
@@ -179,6 +191,33 @@ function onDatabaseRemove(value) {
     }
 }
 
+function onQueueAdd(value) {
+    if (value == null) {
+        return;
+    }
+    var drawn = paper.drawn["queue"];
+    if (drawn != null) {
+        deleteDrawnObject(paper, "queue");
+    }
+    drawn = paper.drawn["queue"] = [];
+    var ax1 = paper.width/2 + 64;
+    var ax2 = paper.width - 138;
+    var ay1 = 256 + 40;
+    var ay2 = 256 + 88;
+    drawn.push(paper.path(["M", ax1, ay1, "H", ax2]).attr("stroke", "gray").attr("stroke-width", "2").attr("arrow-end", "block-wide-long"));
+    drawn.push(paper.path(["M", ax2, ay2, "H", ax1]).attr("stroke", "gray").attr("stroke-width", "2").attr("arrow-end", "block-wide-long"));
+    var image = "icons/queue.png";
+    value = wrapLongString(value, 12);
+    drawn.push(paper.image(image, paper.width - 138, 256, 128, 96));
+    drawn.push(paper.rect(ax2, 256, 128, 128).attr("stroke", "#088"));
+    drawn.push(paper.text(ax2 + 64, 256 + 108, value).attr("font-size", 10));
+
+}
+
+function onQueueRemove(value) {
+    deleteDrawnObject(paper, "queue");
+}
+
 function onAddApplicationPart(language, configuration, drop_down_id) {
     console.log("command: ADD")
     console.log("language: " + language);
@@ -194,6 +233,9 @@ function onAddApplicationPart(language, configuration, drop_down_id) {
     case "Data storage":
         onDatabaseAdd(value);
         break;
+    case "Message queuing service":
+        onQueueAdd(value);
+        break;
     }
 }
 
@@ -206,6 +248,9 @@ function onRemoveApplicationPart(language, configuration, drop_down_id) {
         break;
     case "Data storage":
         onDatabaseRemove(value);
+        break;
+    case "Message queuing service":
+        onQueueRemove(value);
         break;
     }
 }
