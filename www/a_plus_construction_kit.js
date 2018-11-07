@@ -51,9 +51,11 @@ function wrapLongString(str, max) {
 // drawing-related part
 
 var MAX_DATABASES = 7;
+var MAX_INTERFACES = 8;
 
 var paper = null;
 var databases = [];
+var interfaces = [];
 
 function createPaper(width, height) {
     paper = new Raphael(document.getElementById('canvas_container'), width, height);
@@ -95,6 +97,35 @@ function drawDatabaseIcon(paper, i, j, x, y, database_name) {
     }
 }
 
+function drawInterfaceIcon(paper, i, x, y, interface_name) {
+    console.log(i, x, y, interface_name);
+    var attributes1 = {};
+    var attributes2 = {};
+    if (interface_name != null) {
+        attributes1 = {"stroke": "black", "fill": "#c0c0ff"};
+        attributes2 = {"stroke": "#c0c0ff", "fill": "#c0c0ff"};
+    }
+    else {
+        attributes1 = {"stroke": "gray", "stroke-dasharray": "--", "stroke-width": 1};
+        attributes2 = {"fill": "white", "stroke": "gray"};
+    }
+    drawn = paper.drawn["interface_" + i] = [];
+    drawn.push(paper.rect(x+3, y+3, 90, 40).attr("fill", "white").attr(attributes1));
+    drawn.push(paper.rect(x, y, 90, 40).attr("fill", "white").attr(attributes1));
+
+    if (interface_name != null) {
+        // interface name
+        drawn.push(paper.text(x + 40, y + 20, interface_name).attr("font-size", 12).attr("fill", "black"));
+        // connection lines
+        var x1 = x + 90
+        var y1 = y + 20
+        var x2 = x + 90 + 100 - i * 10;
+        var y2 = paper.height/2 - 40 + i * 10
+        var x3 = paper.width/2 - 64;
+        drawn.push(paper.path(["M", x1, y1, "H", x2, "V", y2, "H", x3]).attr("stroke", "#800000"));
+    }
+}
+
 function drawDatabaseIcons(paper, databases) {
     var i;
     for (i=0; i < MAX_DATABASES; i++) {
@@ -108,11 +139,32 @@ function drawDatabaseIcons(paper, databases) {
     }
 }
 
-function deleteDatabaseIcons(paper) {
+function drawInterfacesIcons(paper, interfaces) {
     var i;
-    for (i=0; i < MAX_DATABASES; i++) {
-        deleteDrawnObject(paper, "database_" + i);
+    for (i=0; i < MAX_INTERFACES; i++) {
+        var y = 20 + i * 50;
+        var interface_name = null;
+        if (interfaces.length > i) {
+            interface_name = interfaces[i];
+        }
+        drawInterfaceIcon(paper, i, 10, y, interface_name);
     }
+}
+
+function deleteIconArray(paper, prefix, max_index) {
+    var i;
+    for (i=0; i < max_index; i++) {
+        deleteDrawnObject(paper, prefix + "_" + i);
+    }
+}
+
+function deleteDatabaseIcons(paper) {
+    deleteIconArray(paper, "database", MAX_DATABASES);
+}
+
+
+function deleteInterfacesIcons(paper) {
+    deleteIconArray(paper, "interface", MAX_INTERFACES);
 }
 
 function drawAppSchemaWithOneLanguage(paper, app_type, language) {
@@ -122,6 +174,7 @@ function drawAppSchemaWithOneLanguage(paper, app_type, language) {
     if (app_type == "microservice") {
         drawInternetIcon(paper);
         drawDatabaseIcons(paper, databases);
+        drawInterfacesIcons(paper, interfaces);
     }
 }
 
@@ -144,13 +197,20 @@ function redrawDatabaseIcons(paper, databases) {
     drawDatabaseIcons(paper, databases);
 }
 
+function redrawInterfaceIcons(paper, interfaces) {
+    deleteInterfacesIcons(paper);
+    drawInterfacesIcons(paper, interfaces);
+}
+
 function deleteDrawnObject(paper, selector) {
-    var to_delete = paper.drawn[selector];
-    var i;
-    for (i=0; i < to_delete.length; i++) {
-        to_delete[i].remove();
+    if (selector in paper.drawn) {
+        var to_delete = paper.drawn[selector];
+        var i;
+        for (i=0; i < to_delete.length; i++) {
+            to_delete[i].remove();
+        }
+        paper.drawn[selector] = null;
     }
-    paper.drawn[selector] = null;
 }
 
 // event handlers
@@ -188,6 +248,23 @@ function onDatabaseRemove(value) {
     if (i > -1) {
         databases.splice(i, 1);
         redrawDatabaseIcons(paper, databases);
+    }
+}
+
+function onInterfaceAdd(value) {
+    if (interfaces.indexOf(value) == -1) {
+        if (interfaces.length < MAX_INTERFACES) {
+            interfaces.push(value);
+            redrawInterfaceIcons(paper, interfaces);
+        }
+    }
+}
+
+function onInterfaceRemove(value) {
+    var i = interfaces.indexOf(value);
+    if (i > -1) {
+        interfaces.splice(i, 1);
+        redrawInterfaceIcons(paper, interfaces);
     }
 }
 
@@ -236,6 +313,9 @@ function onAddApplicationPart(language, configuration, drop_down_id) {
     case "Message queuing service":
         onQueueAdd(value);
         break;
+    case "Other interfaces":
+        onInterfaceAdd(value);
+        break;
     }
 }
 
@@ -251,6 +331,9 @@ function onRemoveApplicationPart(language, configuration, drop_down_id) {
         break;
     case "Message queuing service":
         onQueueRemove(value);
+        break;
+    case "Other interfaces":
+        onInterfaceRemove(value);
         break;
     }
 }
