@@ -121,16 +121,16 @@
                             (let [drop-down-id     (configuration->id group)
                                   drop-down-values (get cfg-values group)]
                                 [:tr [:td {:style "padding-right:2em;"} group]
-                                     [:td (form/drop-down {:id drop-down-id :class "select"} drop-down-id drop-down-values)]
-                                     [:td (widgets/add-button    (str "onAddApplicationPart('" language "', '" configuration "', '" drop-down-id "')"))]
-                                     [:td (widgets/remove-button (str "onRemoveApplicationPart('" language "', '" configuration "', '" drop-down-id "')"))]]))
+                                     [:td (widgets/drop-down drop-down-id drop-down-values)]
+                                     [:td (widgets/add-button    language configuration drop-down-id)]
+                                     [:td (widgets/remove-button language configuration drop-down-id)]]))
                     ]
                 (let [drop-down-id     (configuration->id configuration)
                       drop-down-values (get cfg-values configuration)]
                     [:tr [:th {:style "padding-right:2em;"} [:h4 configuration]]
-                         [:td (form/drop-down {:id drop-down-id :class "select"} drop-down-id drop-down-values)]
-                         [:td (widgets/add-button    (str "onAddApplicationPart('" language "', '" configuration "', '" drop-down-id "')"))]
-                         [:td (widgets/remove-button (str "onRemoveApplicationPart('" language "', '" configuration "', '" drop-down-id "')"))]])))
+                         [:td (widgets/drop-down drop-down-id drop-down-values)]
+                         [:td (widgets/add-button    language configuration drop-down-id)]
+                         [:td (widgets/remove-button language configuration drop-down-id)]])))
         ]))
 
 
@@ -163,7 +163,7 @@
                 (let [langs-json (json/write-str languages)]
                     [:script (str "window.onload = function() {
                                   createPaper(640, 640);
-                                  drawAppSchema(paper, " langs-json ");
+                                  drawAppSchema(paper, '" app-type "', " langs-json ");
                               }")]
                 )
             ] ; </div class="container">
