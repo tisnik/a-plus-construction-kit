@@ -52,10 +52,13 @@ function wrapLongString(str, max) {
 
 var MAX_DATABASES = 7;
 var MAX_INTERFACES = 8;
+var MAX_LIBRARIES = 8;
 
+// global (well...) variables used by drawing part
 var paper = null;
 var databases = [];
 var interfaces = [];
+var libraries = [];
 
 function createPaper(width, height) {
     paper = new Raphael(document.getElementById('canvas_container'), width, height);
@@ -98,7 +101,6 @@ function drawDatabaseIcon(paper, i, j, x, y, database_name) {
 }
 
 function drawInterfaceIcon(paper, i, x, y, interface_name) {
-    console.log(i, x, y, interface_name);
     var attributes1 = {};
     var attributes2 = {};
     if (interface_name != null) {
@@ -121,8 +123,30 @@ function drawInterfaceIcon(paper, i, x, y, interface_name) {
         var y1 = y + 20
         var x2 = x + 90 + 100 - i * 10;
         var y2 = paper.height/2 - 40 + i * 10
-        var x3 = paper.width/2 - 64;
-        drawn.push(paper.path(["M", x1, y1, "H", x2, "V", y2, "H", x3]).attr("stroke", "#800000"));
+        var x3 = paper.width/2 - 66;
+        drawn.push(paper.path(["M", x1, y1, "H", x2, "V", y2, "H", x3]).attr("stroke", "#800000").attr("stroke-width", "2").attr("arrow-start", "block-wide-long").attr("arrow-end", "block-wide-long"));
+    }
+}
+
+function drawLibraryIcon(paper, i, x, y, library_name) {
+    console.log(i, x, y, library_name);
+    var attributes1 = {};
+    var attributes2 = {};
+    if (library_name != null) {
+        attributes1 = {"stroke": "black", "fill": "#c0ffc0"};
+        attributes2 = {"stroke": "#c0c0ff", "fill": "#c0ffc0"};
+    }
+    else {
+        attributes1 = {"stroke": "gray", "stroke-dasharray": "--", "stroke-width": 1};
+        attributes2 = {"fill": "white", "stroke": "gray"};
+    }
+    drawn = paper.drawn["library_" + i] = [];
+    drawn.push(paper.rect(x+3, y+3, 90, 40).attr("fill", "white").attr(attributes1));
+    drawn.push(paper.rect(x, y, 90, 40).attr("fill", "white").attr(attributes1));
+
+    if (library_name != null) {
+        // interface name
+        drawn.push(paper.text(x + 40, y + 20, library_name).attr("font-size", 12).attr("fill", "black"));
     }
 }
 
@@ -151,6 +175,24 @@ function drawInterfacesIcons(paper, interfaces) {
     }
 }
 
+function drawLibraryIcons(paper, libraries) {
+    var i;
+    for (i=0; i < MAX_LIBRARIES; i++) {
+        var y = 20 + (i>>1) * 50;
+        if (i % 2 == 0) {
+            var x = paper.width - 200;
+        }
+        else {
+            var x = paper.width - 100;
+        }
+        var library_name = null;
+        if (libraries.length > i) {
+            library_name = libraries[i];
+        }
+        drawLibraryIcon(paper, i, x, y, library_name);
+    }
+}
+
 function deleteIconArray(paper, prefix, max_index) {
     var i;
     for (i=0; i < max_index; i++) {
@@ -167,6 +209,10 @@ function deleteInterfacesIcons(paper) {
     deleteIconArray(paper, "interface", MAX_INTERFACES);
 }
 
+function deleteLibraryIcons(paper) {
+    deleteIconArray(paper, "library", MAX_LIBRARIES);
+}
+
 function drawAppSchemaWithOneLanguage(paper, app_type, language) {
     var image = "languages/128x128/" + language + ".png";
     paper.image(image, paper.width/2 - 64, paper.height/2 - 64, 128, 128);
@@ -175,6 +221,7 @@ function drawAppSchemaWithOneLanguage(paper, app_type, language) {
         drawInternetIcon(paper);
         drawDatabaseIcons(paper, databases);
         drawInterfacesIcons(paper, interfaces);
+        drawLibraryIcons(paper, interfaces);
     }
 }
 
@@ -200,6 +247,11 @@ function redrawDatabaseIcons(paper, databases) {
 function redrawInterfaceIcons(paper, interfaces) {
     deleteInterfacesIcons(paper);
     drawInterfacesIcons(paper, interfaces);
+}
+
+function redrawLibraryIcons(paper, interfaces) {
+    deleteLibraryIcons(paper);
+    drawLibraryIcons(paper, interfaces);
 }
 
 function deleteDrawnObject(paper, selector) {
@@ -268,6 +320,23 @@ function onInterfaceRemove(value) {
     }
 }
 
+function onLibraryAdd(value) {
+    if (libraries.indexOf(value) == -1) {
+        if (libraries.length < MAX_LIBRARIES) {
+            libraries.push(value);
+            redrawLibraryIcons(paper, libraries);
+        }
+    }
+}
+
+function onLibraryRemove(value) {
+    var i = libraries.indexOf(value);
+    if (i > -1) {
+        libraries.splice(i, 1);
+        redrawLibraryIcons(paper, libraries);
+    }
+}
+
 function onQueueAdd(value) {
     if (value == null) {
         return;
@@ -316,6 +385,9 @@ function onAddApplicationPart(language, configuration, drop_down_id) {
     case "Other interfaces":
         onInterfaceAdd(value);
         break;
+    case "Libraries":
+        onLibraryAdd(value);
+        break;
     }
 }
 
@@ -334,6 +406,9 @@ function onRemoveApplicationPart(language, configuration, drop_down_id) {
         break;
     case "Other interfaces":
         onInterfaceRemove(value);
+        break;
+    case "Libraries":
+        onLibraryRemove(value);
         break;
     }
 }
