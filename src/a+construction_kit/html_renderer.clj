@@ -124,6 +124,7 @@
                                      [:td (widgets/drop-down drop-down-id drop-down-values)]
                                      [:td (widgets/add-button    language configuration drop-down-id)]
                                      [:td (widgets/remove-button language configuration drop-down-id)]]))
+                         [:tr [:td {:colspan 4} "&nbsp;"]]
                     ]
                 (let [drop-down-id     (configuration->id configuration)
                       drop-down-values (get cfg-values configuration)]
