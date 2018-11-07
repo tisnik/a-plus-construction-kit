@@ -36,12 +36,22 @@ function readDropDownValue(drop_down_id) {
     return drop_down.options[drop_down.selectedIndex].value;
 }
 
+// drawing-related part
+
+var MAX_DATABASES = 7;
+
 var paper = null;
+var databases = [];
 
 function createPaper(width, height) {
     paper = new Raphael(document.getElementById('canvas_container'), width, height);
     paper.drawn = {};
-    paper.drawn["web_service_framework"] = null;
+}
+
+function drawInternetIcon(paper) {
+    var image = "icons/internet.jpg";
+    paper.image(image, paper.width/2 - 145/2, 10, 145, 85);
+    paper.text(paper.width/2, 60, "Internet").attr("font-size", 16).attr("fill", "white");
 }
 
 function drawAppSchemaWithOneLanguage(paper, language) {
@@ -49,6 +59,9 @@ function drawAppSchemaWithOneLanguage(paper, language) {
     var image = "languages/128x128/" + language + ".png";
     paper.image(image, paper.width/2 - 64, paper.height/2 - 64, 128, 128);
     paper.rect(paper.width/2 - 64, paper.height/2 - 64, 128, 128).attr("stroke", "#088");
+    if (app_type == "microservice") {
+        drawInternetIcon(paper);
+    }
 }
 
 function drawAppSchemaWithTwoLanguages(paper, app_type, languages) {
@@ -74,7 +87,9 @@ function deleteDrawnObject(paper, selector) {
     paper.drawn[selector] = null;
 }
 
-function onFrameworkAdd()selected {
+// event handlers
+
+function onFrameworkAdd(selected) {
     if (selected == null) {
         return;
     }
@@ -84,8 +99,9 @@ function onFrameworkAdd()selected {
         deleteDrawnObject(paper, "web_service_framework");
     }
     drawn = paper.drawn["web_service_framework"] = [];
-    drawn.push(paper.rect(paper.width/2 - 64, 100, 128, 96).attr("stroke", "#088"));
-    drawn.push(paper.text(paper.width/2, 148, selected).attr("font-size", 16));
+    drawn.push(paper.path("M320,256L320,92").attr("stroke-dasharray", "--").attr("stroke", "gray").attr("stroke-width", "2").attr("arrow-end", "block-wide-long"));
+    drawn.push(paper.rect(paper.width/2 - 64, 140, 128, 64).attr("stroke", "#088").attr("fill", "white"));
+    drawn.push(paper.text(paper.width/2, 172, selected).attr("font-size", 16));
 }
 
 function onFrameworkRemove() {
@@ -93,17 +109,26 @@ function onFrameworkRemove() {
 }
 
 function onAddApplicationPart(language, configuration, drop_down_id) {
+    console.log("command: ADD")
+    console.log("language: " + language);
+    console.log("config:   " + configuration);
+    console.log("key:      " + drop_down_id);
     var value = readDropDownValue(drop_down_id);
+    console.log("value:    " + value);
 
-    if (configuration == "Web service framework") {
+    switch (configuration) {
+    case "Web service framework":
         onFrameworkAdd(value);
+        break;
     }
 }
 
 function onRemoveApplicationPart(language, configuration, drop_down_id) {
     var value = readDropDownValue(drop_down_id);
 
-    if (configuration == "Web service framework") {
+    switch (configuration) {
+    case "Web service framework":
         onFrameworkRemove();
+        break;
     }
 }
