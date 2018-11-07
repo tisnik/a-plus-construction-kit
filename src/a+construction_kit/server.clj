@@ -94,6 +94,7 @@
     [request uri method]
     (cond (.endsWith uri ".gif")  (http-utils/return-file "www" (uri->file-name uri) "image/gif")
           (.endsWith uri ".png")  (http-utils/return-file "www" (uri->file-name uri) "image/png")
+          (.endsWith uri ".jpg")  (http-utils/return-file "www" (uri->file-name uri) "image/jpeg")
           (.endsWith uri ".ico")  (http-utils/return-file "www" (uri->file-name uri) "image/x-icon")
           (.endsWith uri ".css")  (http-utils/return-file "www" (uri->file-name uri) "text/css")
           (.endsWith uri ".js")   (http-utils/return-file "www" (uri->file-name uri) "application/javascript")
