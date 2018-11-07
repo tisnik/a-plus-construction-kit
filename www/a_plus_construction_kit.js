@@ -54,13 +54,62 @@ function drawInternetIcon(paper) {
     paper.text(paper.width/2, 60, "Internet").attr("font-size", 16).attr("fill", "white");
 }
 
-function drawAppSchemaWithOneLanguage(paper, language) {
-    var circle = paper.circle(100, 100, 80);
+function drawDatabaseIcon(paper, i, j, x, y, database_name) {
+    var attributes1 = {};
+    var attributes2 = {};
+    if (database_name != null) {
+        attributes1 = {"stroke": "black", "fill": "#ffc0c0"};
+        attributes2 = {"stroke": "#ffc0c0", "fill": "#ffc0c0"};
+    }
+    else {
+        attributes1 = {"stroke": "gray", "stroke-dasharray": "--"};
+        attributes2 = {"fill": "white", "stroke": "white"};
+    }
+    drawn = paper.drawn["database_" + i] = [];
+    drawn.push(paper.ellipse(x, y + 80, 40, 20).attr(attributes1));
+    drawn.push(paper.rect(x - 40, y, 80, 80).attr("fill", "white").attr(attributes2));
+    drawn.push(paper.path(["M", x - 40, y, "L", x - 40, y + 80]).attr(attributes1));
+    drawn.push(paper.path(["M", x + 40, y, "L", x + 40, y + 80]).attr(attributes1));
+    drawn.push(paper.ellipse(x, y, 40, 20).attr("fill", "white").attr(attributes1));
+
+    if (database_name != null) {
+        // database name
+        drawn.push(paper.text(x, y + 120, database_name).attr("font-size", 12).attr("fill", "black"));
+        // connection lines
+        var offset = j - (MAX_DATABASES >> 1);
+        var yn = y - 40 - Math.abs(offset) * 15;
+        var xn = paper.width/2 + offset * 10;
+        drawn.push(paper.path(["M", x, y, "L", x, yn, "L", xn, yn, "L", xn, paper.height/2 + 64 + 1]).attr("stroke", "#800000"));
+    }
+}
+
+function drawDatabaseIcons(paper, databases) {
+    var i;
+    for (i=0; i < MAX_DATABASES; i++) {
+        var permut = [3, 2, 4, 1, 5, 0, 6];
+        var x = 50 + permut[i] * 90;
+        var database_name = null;
+        if (databases.length > i) {
+            database_name = databases[i];
+        }
+        drawDatabaseIcon(paper, i, permut[i], x, 500, database_name);
+    }
+}
+
+function deleteDatabaseIcons(paper) {
+    var i;
+    for (i=0; i < MAX_DATABASES; i++) {
+        deleteDrawnObject(paper, "database_" + i);
+    }
+}
+
+function drawAppSchemaWithOneLanguage(paper, app_type, language) {
     var image = "languages/128x128/" + language + ".png";
     paper.image(image, paper.width/2 - 64, paper.height/2 - 64, 128, 128);
     paper.rect(paper.width/2 - 64, paper.height/2 - 64, 128, 128).attr("stroke", "#088");
     if (app_type == "microservice") {
         drawInternetIcon(paper);
+        drawDatabaseIcons(paper, databases);
     }
 }
 
@@ -76,6 +125,11 @@ function drawAppSchema(paper, app_type, languages) {
     else {
         drawAppSchemaWithTwoLanguages(paper, app_type, languages);
     }
+}
+
+function redrawDatabaseIcons(paper, databases) {
+    deleteDatabaseIcons(paper);
+    drawDatabaseIcons(paper, databases);
 }
 
 function deleteDrawnObject(paper, selector) {
@@ -108,6 +162,23 @@ function onFrameworkRemove() {
     deleteDrawnObject(paper, "web_service_framework");
 }
 
+function onDatabaseAdd(value) {
+    if (databases.indexOf(value) == -1) {
+        if (databases.length < MAX_DATABASES) {
+            databases.push(value);
+            redrawDatabaseIcons(paper, databases);
+        }
+    }
+}
+
+function onDatabaseRemove(value) {
+    var i = databases.indexOf(value);
+    if (i > -1) {
+        databases.splice(i, 1);
+        redrawDatabaseIcons(paper, databases);
+    }
+}
+
 function onAddApplicationPart(language, configuration, drop_down_id) {
     console.log("command: ADD")
     console.log("language: " + language);
@@ -120,6 +191,9 @@ function onAddApplicationPart(language, configuration, drop_down_id) {
     case "Web service framework":
         onFrameworkAdd(value);
         break;
+    case "Data storage":
+        onDatabaseAdd(value);
+        break;
     }
 }
 
@@ -129,6 +203,9 @@ function onRemoveApplicationPart(language, configuration, drop_down_id) {
     switch (configuration) {
     case "Web service framework":
         onFrameworkRemove();
+        break;
+    case "Data storage":
+        onDatabaseRemove(value);
         break;
     }
 }
