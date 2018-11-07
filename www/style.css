@@ -88,6 +88,7 @@ body {
 .select {
     background-color: white;
     height:30px;
+    width:30ex;
 }
 
 .add_button {
