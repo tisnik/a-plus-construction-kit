@@ -135,12 +135,36 @@
         ]))
 
 
+(defn render-application-config
+    [primary-language configuration subgroups config-values]
+    )
+
+(defn render-cli-tool-config
+    [primary-language configuration subgroups config-values]
+    )
+
+(defn render-openshift-cron-job-config
+    [primary-language configuration subgroups config-values]
+    )
+
+(defn render-desktop-config
+    [primary-language configuration subgroups config-values]
+    )
+
 (defn render-configure-modules-form
     [app-type languages configurations subgroups config-values]
     (form/form-to {:name "inputForm"} [:post "/generate-source"]
     (condp = app-type
         "microservice"
         (render-microservice-config (get languages "primary-language") configurations subgroups config-values)
+        "web-application"
+        (render-application-config (get languages "primary-language") configurations subgroups config-values)
+        "desktop"
+        (render-desktop-config (get languages "primary-language") configurations subgroups config-values)
+        "cli-tool"
+        (render-cli-tool-config (get languages "primary-language") configurations subgroups config-values)
+        "openshift-cron-job"
+        (render-openshift-cron-job-config (get languages "primary-language") configurations subgroups config-values)
     )))
 
 
