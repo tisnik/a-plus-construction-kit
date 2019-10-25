@@ -16,7 +16,6 @@
     Author: Pavel Tisnovsky")
 
 
-(require '[hiccup.core  :as hiccup])
 (require '[hiccup.page  :as page])
 (require '[hiccup.form  :as form])
 
