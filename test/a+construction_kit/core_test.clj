@@ -19,9 +19,9 @@
 ;
 
 (defn callable?
-    "Test if given function-name is bound to the real function."
-    [function-name]
-    (clojure.test/function? function-name))
+  "Test if given function-name is bound to the real function."
+  [function-name]
+  (clojure.test/function? function-name))
 
 ;
 ; Tests for various functions
@@ -30,23 +30,24 @@
 (deftest test-start-server-existence
   "Check that the a+construction-kit.core/start-server definition exists."
   (testing "if the a+construction-kit.core/start-server definition exists."
-    (is (callable? 'a+construction-kit.core/start-server))))
+           (is (callable? 'a+construction-kit.core/start-server))))
 
 
 (deftest test-show-help-existence
   "Check that the a+construction-kit.core/show-help definition exists."
   (testing "if the a+construction-kit.core/show-help definition exists."
-    (is (callable? 'a+construction-kit.core/show-help))))
+           (is (callable? 'a+construction-kit.core/show-help))))
 
 
 (deftest test-show-configuration-existence
   "Check that the a+construction-kit.core/show-configuration definition exists."
-  (testing "if the a+construction-kit.core/show-configuration definition exists."
+  (testing
+    "if the a+construction-kit.core/show-configuration definition exists."
     (is (callable? 'a+construction-kit.core/show-configuration))))
 
 
 (deftest test--main-existence
   "Check that the a+construction-kit.core/-main definition exists."
   (testing "if the a+construction-kit.core/-main definition exists."
-    (is (callable? 'a+construction-kit.core/-main))))
+           (is (callable? 'a+construction-kit.core/-main))))
 
