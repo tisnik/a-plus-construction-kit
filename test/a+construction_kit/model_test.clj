@@ -20,9 +20,9 @@
 ;
 
 (defn callable?
-    "Test if given function-name is bound to the real function."
-    [function-name]
-    (clojure.test/function? function-name))
+  "Test if given function-name is bound to the real function."
+  [function-name]
+  (clojure.test/function? function-name))
 
 ;
 ; Tests for various functions
