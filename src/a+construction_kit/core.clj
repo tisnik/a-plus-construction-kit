@@ -11,10 +11,10 @@
 ;
 
 (ns a+construction-kit.core
-    "Core module containing the -main function and the startup code.
+  "Core module containing the -main function and the startup code.
 
     Author: Pavel Tisnovsky"
-    (:gen-class))
+  (:gen-class))
 
 
 (require '[ring.adapter.jetty      :as jetty])
@@ -32,55 +32,59 @@
 
 
 (def cli-options
-    "Definitions of all command line options currenty supported."
-    ;; an option with a required argument
-    [["-c" "--print-config"   "print configuration and exit" :id :print-config]
-     ["-h" "--help"           "show this help"               :id :help]])
+  "Definitions of all command line options currenty supported."
+  ;; an option with a required argument
+  [["-c" "--print-config" "print configuration and exit" :id :print-config]
+   ["-h" "--help" "show this help" :id :help]])
 
 
 ; we need to load the configuration in advance so the 'app' could use it
 (def configuration
-    "Configuration structure that is loaded automatically during the startup."
-    (config/load-configuration-from-ini "config.ini"))
+  "Configuration structure that is loaded automatically during the startup."
+  (config/load-configuration-from-ini "config.ini"))
 
 
 (def app
-    "Definition of a Ring-based application behaviour."
-    (-> server/handler            ; handle all events
-        (middleware/inject-configuration configuration) ; inject configuration structure into the parameter
-        session/wrap-session
-        cookies/wrap-cookies      ; we need to work with cookies
-        http-params/wrap-params)) ; and to process request parameters, of course
+  "Definition of a Ring-based application behaviour."
+  (-> server/handler            ; handle all events
+      (middleware/inject-configuration configuration) ; inject configuration
+                                                      ; structure into the
+                                                      ; parameter
+      session/wrap-session
+      cookies/wrap-cookies      ; we need to work with cookies
+      http-params/wrap-params)) ; and to process request parameters, of course
 
 
 (defn start-server
-    "Start the HTTP server on the specified port.
+  "Start the HTTP server on the specified port.
      The port is specified as string."
-    [port]
-    (log/info "Starting the server at the port: " port)
-    (jetty/run-jetty app {:port (read-string port)}))
+  [port]
+  (log/info "Starting the server at the port: " port)
+  (jetty/run-jetty app {:port (read-string port)}))
 
 
 (defn show-help
-    "Display brief help on the standard output."
-    [all-options]
-    (println "Usage:")
-    (println (:summary all-options)))
+  "Display brief help on the standard output."
+  [all-options]
+  (println "Usage:")
+  (println (:summary all-options)))
 
 
 (defn show-configuration
-    "Show the configuration loaded from the standard INI file."
-    [configuration]
-    (clojure.pprint/pprint configuration))
+  "Show the configuration loaded from the standard INI file."
+  [configuration]
+  (clojure.pprint/pprint configuration))
 
 
 (defn -main
-    "Entry point to the A+ Construction Kit service."
-    [& args]
-    (let [all-options  (cli/parse-opts args cli-options)
-          options      (all-options :options)
-          port         (-> configuration :service :port)]
-          ; perform the selected operation according to CLI options
-          (cond (:help options)         (show-help all-options)
-                (:print-config options) (show-configuration configuration)
-                :else                   (start-server    port))))
+  "Entry point to the A+ Construction Kit service."
+  [& args]
+  (let [all-options (cli/parse-opts args cli-options)
+        options     (all-options :options)
+        port        (-> configuration
+                        :service
+                        :port)]
+    ; perform the selected operation according to CLI options
+    (cond (:help options) (show-help all-options)
+          (:print-config options) (show-configuration configuration)
+          :else (start-server port))))
