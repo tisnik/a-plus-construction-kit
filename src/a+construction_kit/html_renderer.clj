@@ -64,6 +64,9 @@
           [:h3 "Documentation"]
           [:ol
            [:li [:a {:href "/about.html"} "About"]]
+           [:li [:a {:href "/motivation.html"} "Motivation"]]
+           [:li [:a {:href "/solution.html"} "Solution"]]
+           [:li [:a {:href "/references.html"} "References"]]
           ]
           [:br]
           (widgets/back-button)
