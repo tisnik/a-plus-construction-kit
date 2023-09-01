@@ -1,5 +1,5 @@
 ;
-;  (C) Copyright 2018, 2020  Pavel Tisnovsky
+;  (C) Copyright 2018, 2020, 2023  Pavel Tisnovsky
 ;
 ;  All rights reserved. This program and the accompanying materials
 ;  are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@
     Author: Pavel Tisnovsky")
 
 
+(require '[clojure.string :as str])
 (require '[hiccup.page :as page])
 (require '[hiccup.form :as form])
 
@@ -56,17 +57,17 @@
 
 (defn language-icon
     [language]
-    (str "languages/64x64/" language ".png"))
+    (str "languages/64x64/" (str/replace language #"#" "sharp") ".png"))
 
 (defn render-select-language-page
   "Render the page with the selection of language or languages to use for the app."
   [app-type app-type-label app-parts app-languages]
   (page/xhtml
     (widgets/header "/" {:include-raphael false})
-    [:body
+    [:body {:style "padding-top:50px"}
      [:div {:class "container"}
           (widgets/navigation-bar "/")
-          [:h3 "Language selection for " (render-app-type app-type-label)]
+          [:h3 "Primary language selection for " (render-app-type app-type-label)]
                 [:br]
                 (form/form-to {:name "inputForm"} [:get "/configure-modules"]
                     [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
@@ -84,6 +85,7 @@
                             [:span
                                 [:a {:href (str "javascript:onSelectPrimaryLanguageIcon('" language "')")} [:img {:src (language-icon language) :style "margin-right:10px"}]]
                                 (widgets/radio-button "primary-language" false language language "enableNextButton()")
+                                [:br]
                             ]))
                         [:br]
                         (widgets/disabled-submit-button "Next" "next" "next"))
@@ -172,7 +174,7 @@
   [app-type app-type-label languages configurations subgroups config-values]
   (page/xhtml
     (widgets/header "/" {:include-raphael true})
-    [:body
+    [:body {:style "padding-top:50px"}
      [:div {:class "container",
             :style "width:90%"}
           (widgets/navigation-bar "/")
