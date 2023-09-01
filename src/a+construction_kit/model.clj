@@ -1,5 +1,5 @@
 ;
-;  (C) Copyright 2018, 2020  Pavel Tisnovsky
+;  (C) Copyright 2018, 2020, 2023  Pavel Tisnovsky
 ;
 ;  All rights reserved. This program and the accompanying materials
 ;  are made available under the terms of the Eclipse Public License v1.0
@@ -52,7 +52,9 @@
                        "Graph database"
                        "Other NoSQL database"]
    "Other interfaces" ["Information system"
-                       "CI"]
+                       "CI"
+                       "Monitoring"
+                       "Alerting"]
    "Libraries"        ["Logging" "Networking" "Image manipulation" "Plotting"]
 })
 
@@ -68,6 +70,8 @@
              "Message queuing service"    ["Microsoft Azure Service Bus" "Oracle Messaging Cloud Service" "Amazon Simple Queue Service" "IronMQ" "StormMQ" "AnypointMQ"]
              "Information system"         ["SAP" "WordPress" "Joomla" "Drupal" "Google Maps" "Yahoo Maps"]
              "CI"                         ["Jenkins" "Buildbot" "Travis CI"]
+             "Monitoring"                 ["Grafana"]
+             "Alerting"                   ["Grafana Alerts"]
              "Logging"                    ["logging" "logging2" "fastlog"]     
              "Image manipulation"         ["Pillow" "PIL"]
              "Networking"                 ["asyncoro" "Gevent" "TwistedMatrix" "RPyC" "PyRO"]
