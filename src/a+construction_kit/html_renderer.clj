@@ -53,6 +53,26 @@
     ] ; </body>
   ))
 
+(defn render-documentation-page
+  "Render documentation page."
+  []
+  (page/xhtml
+    (widgets/header "/" {:include-raphael false})
+    [:body
+     [:div {:class "container"}
+          (widgets/navigation-bar "/")
+          [:h3 "Documentation"]
+          [:ol
+           [:li [:a {:href "/about.html"} "About"]]
+          ]
+          [:br]
+          (widgets/back-button)
+          [:div {:style "height: 10ex"}]
+          (widgets/footer)
+     ] ; </div class="container">
+    ] ; </body>
+  ))
+
 (defn render-select-app-page
   "Render front page of this application with the selection of application type."
   [app-types]
@@ -71,6 +91,7 @@
                    (widgets/submit-button (:label app-type) "app-type" (:name app-type))
                    [:br]
                    [:br]]))
+          (widgets/back-button)
           [:div {:style "height: 10ex"}]
           (widgets/footer)
         ] ; </div class="container">

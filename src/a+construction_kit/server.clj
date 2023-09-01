@@ -64,10 +64,19 @@
 
 
 (defn process-index-page
+  "Render index page."
   [request]
     (finish-processing
       request
       (html-renderer/render-index-page)))
+
+
+(defn process-documentation-page
+  "Render documentation page."
+  [request]
+    (finish-processing
+      request
+      (html-renderer/render-documentation-page)))
 
 
 (defn process-select-language-page
@@ -124,6 +133,7 @@
       (condp = uri
           ; common pages
           "/"                           (process-index-page request)
+          "/documentation"              (process-documentation-page request)
           "/select-app-type"            (process-select-app-page request)
           "/select-language"            (process-select-language-page request)
           "/configure-modules"          (process-configure-modules-page request)
