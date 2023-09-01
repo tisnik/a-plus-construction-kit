@@ -173,7 +173,7 @@
               [:tr [:th [:h4 configuration]]]
               (for [group (get subgroups configuration)]
                         (let [drop-down-id     (configuration->id group)
-                              drop-down-values (get cfg-values group)]
+                              drop-down-values (cons "(please choose)" (get cfg-values group))]
                           [:tr [:td {:style "padding-right:2em;"} group]
                            [:td (widgets/drop-down drop-down-id drop-down-values)]
                            [:td (widgets/add-button    language configuration drop-down-id)]
@@ -181,7 +181,7 @@
               [:tr [:td {:colspan 4} "&nbsp;"]]
              ]
             (let [drop-down-id     (configuration->id configuration)
-                  drop-down-values (get cfg-values configuration)]
+                  drop-down-values (cons "(please choose)" (get cfg-values configuration))]
                [:tr [:th {:style "padding-right:2em;"} [:h4 configuration]]
                 [:td (widgets/drop-down drop-down-id drop-down-values)]
                 [:td (widgets/add-button    language configuration drop-down-id)]
@@ -203,9 +203,6 @@
 
 (defn render-configure-modules-form
   [app-type languages configurations subgroups config-values]
-  (form/form-to
-    {:name "inputForm"}
-    [:post "/generate-source"]
     (condp = app-type
         "microservice"
         (render-microservice-config (get languages "primary-language") configurations subgroups config-values)
@@ -217,7 +214,7 @@
         (render-cli-tool-config (get languages "primary-language") configurations subgroups config-values)
         "openshift-cron-job"
         (render-openshift-cron-job-config (get languages "primary-language") configurations subgroups config-values)
-    )))
+    ))
 
 
 (defn render-configure-modules-page
@@ -231,16 +228,21 @@
           [:h3 "Modules for " (render-app-type app-type-label) " written in " (render-languages languages)]
           [:br]
           [:div {:class "row"}
-               [:div {:class "column"}
-                    (widgets/canvas)]
-               [:div {:class "column"}
-                    (render-configure-modules-form app-type
-                                                   languages
-                                                   configurations
-                                                   subgroups
-                                                   config-values)]
-              ]
-          [:div {:style "height: 5ex"}]
+          (form/form-to
+                {:name "service_configuration"}
+                [:get "/finish"]
+                [:div {:class "column"}
+                     (widgets/canvas)]
+                [:div {:class "column"}
+                     (render-configure-modules-form app-type
+                                                    languages
+                                                    configurations
+                                                    subgroups
+                                                    config-values)]
+                [:div {:style "height: 5ex"}]
+                (widgets/submit-button "Finish" "finish" "finish")
+                [:br])
+          ]
           (widgets/footer)
           (let [langs-json (json/write-str languages)]
                 [:script (str "window.onload = function() {
