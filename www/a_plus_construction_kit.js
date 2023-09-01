@@ -66,8 +66,8 @@ function createPaper(width, height) {
 }
 
 function drawInternetIcon(paper) {
-    var image = "icons/internet.jpg";
-    paper.image(image, paper.width/2 - 145/2, 10, 145, 85);
+    var image = "icons/internet.png";
+    paper.image(image, paper.width/2 - 105/2, 10, 105, 105);
     paper.text(paper.width/2, 60, "Internet").attr("font-size", 16).attr("fill", "white");
 }
 
