@@ -27,6 +27,32 @@
 
 
 
+(defn render-index-page
+  "Render index page."
+  []
+  (page/xhtml
+    (widgets/header "/" {:include-raphael false})
+    [:body
+     [:div {:class "container"}
+          (widgets/navigation-bar "/")
+          [:h3 "A+ Construction Kit"]
+          [:div {:style "height: 10ex"}]
+          (form/form-to
+                {:name "inputForm1"}
+                [:get "/select-app-type"]
+                   (widgets/submit-button "Create new application" "app-type" "app-type")
+                [:br])
+          [:br]
+          (form/form-to
+                {:name "inputForm2"}
+                [:get "/documentation"]
+                   (widgets/submit-button "Documentation" "about" "about")
+                [:br])
+          (widgets/footer)
+     ] ; </div class="container">
+    ] ; </body>
+  ))
+
 (defn render-select-app-page
   "Render front page of this application with the selection of application type."
   [app-types]

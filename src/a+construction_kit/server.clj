@@ -63,6 +63,13 @@
        (into {})))
 
 
+(defn process-index-page
+  [request]
+    (finish-processing
+      request
+      (html-renderer/render-index-page)))
+
+
 (defn process-select-language-page
   [request]
   (let [params         (:params request)
@@ -116,7 +123,8 @@
         :else
       (condp = uri
           ; common pages
-          "/"                           (process-select-app-page request)
+          "/"                           (process-index-page request)
+          "/select-app-type"            (process-select-app-page request)
           "/select-language"            (process-select-language-page request)
           "/configure-modules"          (process-configure-modules-page request)
           )))
