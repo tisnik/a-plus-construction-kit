@@ -31,6 +31,15 @@ function onSelectLanguagePartIcon(part, language, app_parts) {
     languagePartSelected(part, app_parts);
 }
 
+function onSelectDeploymentTypeIcon(deploymentType) {
+    var id = "deployment-type" + "-" + deploymentType;
+    var element = document.getElementById(id);
+    if (element != null) {
+        element.checked = true;
+        enableNextButton();
+    }
+}
+
 function readDropDownValue(drop_down_id) {
     var drop_down = document.getElementById(drop_down_id);
     return drop_down.options[drop_down.selectedIndex].value;

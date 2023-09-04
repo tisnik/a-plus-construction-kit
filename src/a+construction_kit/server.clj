@@ -91,15 +91,17 @@
 
 (defn process-select-language-page
   [request]
-  (let [params         (:params request)
-        app-type       (get params "app-type")
-        app-type-label (app-type-name->label model/app-types app-type)
-        app-parts      (get model/app-parts app-type)
-        app-languages  (get model/app-languages app-type)]
+  (let [params          (:params request)
+        app-type        (get params "app-type")
+        app-type-label  (app-type-name->label model/app-types app-type)
+        deployment-type (get params "deployment-type")
+        app-parts       (get model/app-parts app-type)
+        app-languages   (get model/app-languages app-type)]
     (finish-processing
       request
       (html-renderer/render-select-language-page app-type
                                                  app-type-label
+                                                 deployment-type
                                                  app-parts
                                                  app-languages))))
 

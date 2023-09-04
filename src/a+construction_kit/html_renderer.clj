@@ -122,7 +122,7 @@
                 [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
                 (for [deployment-type deployment-types]
                       [:span
-                          [:a {:href (str "javascript:onSelectDeploymentTypeIcon('" deployment-type "')")}
+                          [:a {:href (str "javascript:onSelectDeploymentTypeIcon('" (:name deployment-type) "')")}
                               [:img {:src (deployment-icon deployment-type) :style "margin-right:10px"}]]
                           (widgets/radio-button "deployment-type" false (:name deployment-type) (:label deployment-type) "enableNextButton()")
                           [:br]
@@ -174,7 +174,7 @@
 
 (defn render-select-language-page
   "Render the page with the selection of language or languages to use for the app."
-  [app-type app-type-label app-parts app-languages]
+  [app-type app-type-label deployment-type app-parts app-languages]
   (page/xhtml
     (widgets/header "/" {:include-raphael false})
     [:body {:style "padding-top:50px"}
@@ -184,6 +184,7 @@
                 [:br]
                 (form/form-to {:name "inputForm"} [:get "/configure-modules"]
                     [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
+                    [:input {:type "hidden" :name "deployment-type" :id "deployment-type" :value deployment-type}]
                     (if app-parts
                         (for [part app-parts]
                             [:span
