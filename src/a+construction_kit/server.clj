@@ -1,5 +1,5 @@
 ;
-;  (C) Copyright 2018, 2020  Pavel Tisnovsky
+;  (C) Copyright 2018, 2020, 2023  Pavel Tisnovsky
 ;
 ;  All rights reserved. This program and the accompanying materials
 ;  are made available under the terms of the Eclipse Public License v1.0
@@ -112,6 +112,14 @@
                                                    subgroups
                                                    config-values))))
 
+(defn process-finish-construction
+  [request]
+  (let [params             (:params request)]
+    (println params)
+    (finish-processing
+      request
+      (html-renderer/render-finish-construction-page))))
+
 (defn uri->file-name
   [uri]
   (subs uri (inc (.indexOf uri "/"))))
@@ -137,6 +145,7 @@
           "/select-app-type"            (process-select-app-page request)
           "/select-language"            (process-select-language-page request)
           "/configure-modules"          (process-configure-modules-page request)
+          "/finish"                     (process-finish-construction request)
           )))
 
 (defn handler
