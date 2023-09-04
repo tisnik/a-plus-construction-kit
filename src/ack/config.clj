@@ -10,7 +10,7 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns a+construction-kit.config
+(ns ack.config
   "Configuration loader and parser.
 
     Author: Pavel Tisnovsky")

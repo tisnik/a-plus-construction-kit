@@ -10,7 +10,7 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns a+construction-kit.model)
+(ns ack.model)
 
 (def deployment-types
     [{:label "OpenShift"

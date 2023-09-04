@@ -10,7 +10,7 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns a+construction-kit.html-renderer-widgets
+(ns ack.html-renderer-widgets
   "Module that contains common utility functions for the html-renderer and html-renderer help modules
 
     Author: Pavel Tisnovsky")

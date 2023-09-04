@@ -10,7 +10,7 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns a+construction-kit.server
+(ns ack.server
   "Server module with functions to accept requests and send response back to users via HTTP.")
 
 (require '[ring.util.response      :as http-response])
@@ -21,9 +21,9 @@
 
 (require '[clj-http-utils.http-utils :as http-utils])
 
-(require '[a+construction-kit.html-renderer :as html-renderer])
-(require '[a+construction-kit.config        :as config])
-(require '[a+construction-kit.model         :as model])
+(require '[ack.html-renderer :as html-renderer])
+(require '[ack.config        :as config])
+(require '[ack.model         :as model])
 
 (use '[clj-utils.utils])
 

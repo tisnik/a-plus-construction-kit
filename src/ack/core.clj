@@ -10,7 +10,7 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns a+construction-kit.core
+(ns ack.core
   "Core module containing the -main function and the startup code.
 
     Author: Pavel Tisnovsky"
@@ -27,8 +27,8 @@
 
 (require '[clj-middleware.middleware  :as middleware])
 
-(require '[a+construction-kit.config  :as config])
-(require '[a+construction-kit.server  :as server])
+(require '[ack.config  :as config])
+(require '[ack.server  :as server])
 
 
 (def cli-options

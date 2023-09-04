@@ -10,7 +10,7 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns a+construction-kit.html-renderer
+(ns ack.html-renderer
   "Module that contains functions used to render HTML pages sent back to the browser.
 
     Author: Pavel Tisnovsky")
@@ -23,7 +23,7 @@
 (require '[clojure.data.json :as json])
 
 
-(require '[a+construction-kit.html-renderer-widgets :as widgets])
+(require '[ack.html-renderer-widgets :as widgets])
 
 
 
