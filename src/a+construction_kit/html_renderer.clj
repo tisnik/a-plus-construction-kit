@@ -87,7 +87,70 @@
           [:h3 "Please choose application type"]
           (form/form-to
                 {:name "inputForm"}
+                [:get "/select-deployment"]
+                [:br]
+                (for [app-type app-types]
+                  [:div
+                   (widgets/submit-button (:label app-type) "app-type" (:name app-type))
+                   [:br]
+                   [:br]]))
+          (widgets/back-button)
+          [:div {:style "height: 10ex"}]
+          (widgets/footer)
+        ] ; </div class="container">
+    ] ; </body>
+  ))
+
+
+(defn deployment-icon
+    [deployment-type]
+    (str "icons/" (:name deployment-type) ".png"))
+
+
+(defn render-select-deployment-page
+  [app-type app-type-label deployment-types]
+  (page/xhtml
+    (widgets/header "/" {:include-raphael false})
+    [:body
+     [:div {:class "container"}
+          (widgets/navigation-bar "/")
+          [:h3 "Please choose deployment type for: " app-type-label]
+          (form/form-to
+                {:name "inputForm"}
                 [:get "/select-language"]
+                [:br]
+                [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
+                (for [deployment-type deployment-types]
+                      [:span
+                          [:a {:href (str "javascript:onSelectDeploymentTypeIcon('" deployment-type "')")}
+                              [:img {:src (deployment-icon deployment-type) :style "margin-right:10px"}]]
+                          (widgets/radio-button "deployment-type" false (:name deployment-type) (:label deployment-type) "enableNextButton()")
+                          [:br]
+                      ])
+                [:br]
+                (widgets/disabled-submit-button "Next" "next" "next")
+                [:br]
+                [:br]
+          )
+          (widgets/back-button)
+          [:div {:style "height: 10ex"}]
+          (widgets/footer)
+        ] ; </div class="container">
+    ] ; </body>
+  ))
+
+(defn render-select-app-page
+  "Render front page of this application with the selection of application type."
+  [app-types]
+  (page/xhtml
+    (widgets/header "/" {:include-raphael false})
+    [:body
+     [:div {:class "container"}
+          (widgets/navigation-bar "/")
+          [:h3 "Please choose application type"]
+          (form/form-to
+                {:name "inputForm"}
+                [:get "/select-deployment"]
                 [:br]
                 (for [app-type app-types]
                   [:div
@@ -241,6 +304,8 @@
                                                     config-values)]
                 [:div {:style "height: 5ex"}]
                 (widgets/submit-button "Finish" "finish" "finish")
+                [:span "&nbsp;"]
+                (widgets/back-button)
                 [:br])
           ]
           (widgets/footer)
