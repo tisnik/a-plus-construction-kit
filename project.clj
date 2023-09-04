@@ -19,7 +19,7 @@
                  [org.clojure/tools.cli "0.3.1"]
                  [clojure-ini "0.0.1"]
                  [ring/ring-core "1.10.0"]
-                 ;[ring/ring-jetty-adapter "1.3.2"]
+                 [ring/ring-jetty-adapter "1.8.1"]
                  [org.clojure/data.json "0.2.5"]
                  [hiccup "1.0.4"]
                  [org.clojure/tools.logging "0.3.1"]
