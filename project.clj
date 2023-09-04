@@ -10,7 +10,7 @@
 ;      Pavel Tisnovsky
 ;
 
-(defproject a+construction-kit "0.1.0-SNAPSHOT"
+(defproject ack "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License",
@@ -34,11 +34,11 @@
                  [org.clojars.tisnik/clj-fileutils "0.4.0-SNAPSHOT"]
                  [org.clojars.tisnik/clj-http-utils "0.1.0-SNAPSHOT"]]
   :dev-dependencies [[lein-ring "0.8.10"]]
-  :main ^:skip-aot a+construction-kit.core
+  :main ^:skip-aot ack.core
   :plugins [[lein-ring "0.12.6"]
             [codox "0.8.11"]
             [test2junit "1.1.0"]
             [lein-cloverage "1.0.6"]]
-  :ring {:handler a+construction-kit.core/app}
+  :ring {:handler ack.core/app}
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
