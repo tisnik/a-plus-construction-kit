@@ -66,7 +66,7 @@
              "Document-oriented database" ["Caché" "CouchDB" "MongoDB"]
              "Graph database"             ["JanusGraph" "Neo4j" "Oracle Spatial and Graph"]
              "Other NoSQL database"       ["BaseX" "eXist" "Sedna"]
-             "Streaming platform"         ["Apache Kafka"]
+             "Streaming platform"         ["Apache Kafka" "JetStream" "Redis streams"]
              "Message queuing service"    ["Microsoft Azure Service Bus" "Oracle Messaging Cloud Service" "Amazon Simple Queue Service" "IronMQ" "StormMQ" "AnypointMQ"]
              "Information system"         ["SAP" "WordPress" "Joomla" "Drupal" "Google Maps" "Yahoo Maps"]
              "CI"                         ["Jenkins" "Buildbot" "Travis CI"]
@@ -76,4 +76,22 @@
              "Image manipulation"         ["Pillow" "PIL"]
              "Networking"                 ["asyncoro" "Gevent" "TwistedMatrix" "RPyC" "PyRO"]
              "Plotting"                   ["gnuplot.py" "Matplotlib"]
-  }})                                                                          
+  }
+   "Go"     {"Web service framework"      ["Gorilla Toolkit" "Gin" "Beego" "Iris" "Echo" "Fiber"]
+             "Relational database"        ["DB/2" "Oracle RDBMS" "PostgreSQL" "AWS RDS" "MariaDB/MySQL" "SQLite" "ODBC"]
+             "Key-value database"         ["Dynamo", "Oracle NoSQL Database" "memcached" "Redis" "Berkeley DB"]
+             "Document-oriented database" ["Caché" "CouchDB" "MongoDB"]
+             "Graph database"             ["JanusGraph" "Neo4j" "Oracle Spatial and Graph"]
+             "Other NoSQL database"       ["BaseX" "eXist" "Sedna"]
+             "Streaming platform"         ["Apache Kafka" "JetStream" "Redis streams"]
+             "Message queuing service"    ["Microsoft Azure Service Bus" "Oracle Messaging Cloud Service" "Amazon Simple Queue Service" "IronMQ" "StormMQ" "AnypointMQ"]
+             "Information system"         ["SAP" "WordPress" "Joomla" "Drupal" "Google Maps" "Yahoo Maps"]
+             "CI"                         ["Jenkins" "Buildbot" "Travis CI"]
+             "Monitoring"                 ["Grafana"]
+             "Alerting"                   ["Grafana Alerts"]
+             "Logging"                    ["logrus" "go-kit" "log" "zap" "zerolog"]     
+             "Image manipulation"         ["img" "mergi" "picfit"]
+             "Networking"                 ["apr" "fullproxy" "cidranger" "event" "gaio" "gmqt"]
+             "Plotting"                   ["chart" "gonum" "gograph" "gohistogram"]
+  }
+})                                                                          
