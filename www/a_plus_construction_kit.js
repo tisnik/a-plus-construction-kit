@@ -352,20 +352,27 @@ function onQueueAdd(value) {
     var ay2 = 256 + 88;
     drawn.push(paper.path(["M", ax1, ay1, "H", ax2]).attr("stroke", "gray").attr("stroke-width", "2").attr("arrow-end", "block-wide-long"));
     drawn.push(paper.path(["M", ax2, ay2, "H", ax1]).attr("stroke", "gray").attr("stroke-width", "2").attr("arrow-end", "block-wide-long"));
-    if (value != "Apache Kafka") {
-        var image = "icons/queue.png";
-        value = wrapLongString(value, 12);
-        drawn.push(paper.image(image, paper.width - 138 + 32, 256 + 20, 64, 42));
-        drawn.push(paper.rect(ax2, 256, 128, 128).attr("stroke", "#088"));
-        drawn.push(paper.text(ax2 + 64, 256 + 108, value).attr("font-size", 10));
-    } else {
-        var image = "icons/kafka.jpg";
-        value = wrapLongString(value, 12);
-        drawn.push(paper.image(image, paper.width - 138 + 32, 256+5, 64, 90));
-        drawn.push(paper.rect(ax2, 256, 128, 128).attr("stroke", "#088"));
-        drawn.push(paper.text(ax2 + 64, 256 + 108, value).attr("font-size", 10));
+    switch (value) {
+        case "Apache Kafka":
+            var image = "icons/kafka.jpg";
+            drawn.push(paper.image(image, paper.width - 138 + 32, 256+5, 64, 90));
+            break;
+        case "JetStream":
+            var image = "icons/nats.png";
+            drawn.push(paper.image(image, paper.width - 138 + 15, 256+25, 99, 48));
+            break;
+        case "Redis streams":
+            var image = "icons/redis.png";
+            drawn.push(paper.image(image, paper.width - 138 + 15, 256+5, 100, 94));
+            break;
+        default:
+            var image = "icons/queue.png";
+            drawn.push(paper.image(image, paper.width - 138 + 32, 256 + 20, 64, 42));
+            break;
     }
-
+    value = wrapLongString(value, 12);
+    drawn.push(paper.rect(ax2, 256, 128, 128).attr("stroke", "#088"));
+    drawn.push(paper.text(ax2 + 64, 256 + 108, value).attr("font-size", 10));
 }
 
 function onQueueRemove(value) {
