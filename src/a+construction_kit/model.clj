@@ -12,6 +12,14 @@
 
 (ns a+construction-kit.model)
 
+(def deployment-types
+    [{:label "OpenShift"
+      :name  "openshift"}
+     {:label "Amazon Web Services"
+      :name  "aws"}
+     {:label "Microsoft Azure"
+      :name  "azure"}])
+
 (def app-types
     [{:label "Microservice"
       :name  "microservice"}
