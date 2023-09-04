@@ -10,9 +10,9 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns a+construction-kit.core-test
+(ns ack.core-test
   (:require [clojure.test :refer :all]
-            [a+construction-kit.core :refer :all]))
+            [ack.core :refer :all]))
 
 ;
 ; Common functions used by tests.
@@ -28,26 +28,26 @@
 ;
 
 (deftest test-start-server-existence
-  "Check that the a+construction-kit.core/start-server definition exists."
-  (testing "if the a+construction-kit.core/start-server definition exists."
-           (is (callable? 'a+construction-kit.core/start-server))))
+  "Check that the ack.core/start-server definition exists."
+  (testing "if the ack.core/start-server definition exists."
+           (is (callable? 'ack.core/start-server))))
 
 
 (deftest test-show-help-existence
-  "Check that the a+construction-kit.core/show-help definition exists."
-  (testing "if the a+construction-kit.core/show-help definition exists."
-           (is (callable? 'a+construction-kit.core/show-help))))
+  "Check that the ack.core/show-help definition exists."
+  (testing "if the ack.core/show-help definition exists."
+           (is (callable? 'ack.core/show-help))))
 
 
 (deftest test-show-configuration-existence
-  "Check that the a+construction-kit.core/show-configuration definition exists."
+  "Check that the ack.core/show-configuration definition exists."
   (testing
-    "if the a+construction-kit.core/show-configuration definition exists."
-    (is (callable? 'a+construction-kit.core/show-configuration))))
+    "if the ack.core/show-configuration definition exists."
+    (is (callable? 'ack.core/show-configuration))))
 
 
 (deftest test--main-existence
-  "Check that the a+construction-kit.core/-main definition exists."
-  (testing "if the a+construction-kit.core/-main definition exists."
-           (is (callable? 'a+construction-kit.core/-main))))
+  "Check that the ack.core/-main definition exists."
+  (testing "if the ack.core/-main definition exists."
+           (is (callable? 'ack.core/-main))))
 

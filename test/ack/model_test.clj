@@ -10,9 +10,9 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns a+construction-kit.config-test
+(ns ack.config-test
   (:require [clojure.test :refer :all]
-            [a+construction-kit.model :refer :all]
+            [ack.model :refer :all]
             [clojure.pprint :as pprint]))
 
 ;
