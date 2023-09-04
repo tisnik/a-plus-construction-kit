@@ -218,24 +218,30 @@
     [:body {:style "padding-top:50px"}
      [:div {:class "container"}
           (widgets/navigation-bar "/")
-          [:h3 "Primary language selection for " (render-app-type app-type-label)]
+          [:h3 "Language selection for " (render-app-type app-type-label)]
                 [:br]
                 (form/form-to {:name "inputForm"} [:get "/configure-modules"]
                     [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
                     [:input {:type "hidden" :name "deployment-type" :id "deployment-type" :value deployment-type}]
                     (if app-parts
+                        [:div {:class "container"}
+                        [:div {:class "row"}
                         (for [part app-parts]
-                            [:span
+                            [:div {:class "col-lg-2" :style "width:300px"}
                                 [:h4 part]
                                 (for [language (get app-languages part)]
                                     [:span
-                                        [:a {:href (str "javascript:onSelectLanguagePartIcon('" part "', '" language "', "(count app-parts)")")} [:img {:src (language-icon language) :style "margin-right:10px"}]]
+                                        [:a {:href (str "javascript:onSelectLanguagePartIcon('" part "', '" language "', "(count app-parts)")")}
+                                           [:img {:src (language-icon language) :style "margin-right:10px"}]]
                                         (widgets/radio-button (str part "-language") false language language (str "languagePartSelected('" part "'," (count app-parts) ")"))
+                                        [:br]
                                     ])
                                 [:br]])
+                        ]]
                         (for [language app-languages]
                             [:span
-                                [:a {:href (str "javascript:onSelectPrimaryLanguageIcon('" language "')")} [:img {:src (language-icon language) :style "margin-right:10px"}]]
+                                [:a {:href (str "javascript:onSelectPrimaryLanguageIcon('" language "')")}
+                                   [:img {:src (language-icon language) :style "margin-right:10px"}]]
                                 (widgets/radio-button "primary-language" false language language "enableNextButton()")
                                 [:br]
                             ]))
