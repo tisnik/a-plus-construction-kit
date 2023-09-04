@@ -254,3 +254,18 @@
     ] ; </body>
   ))
 
+(defn render-finish-construction-page
+  "Render 'finish construction' page."
+  []
+  (page/xhtml
+    (widgets/header "/" {:include-raphael false})
+    [:body
+     [:div {:class "container"}
+          (widgets/navigation-bar "/")
+          [:h3 "Finish application construction"]
+          [:div {:style "height: 10ex"}]
+          (widgets/footer)
+     ] ; </div class="container">
+    ] ; </body>
+  ))
+
