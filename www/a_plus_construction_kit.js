@@ -352,11 +352,19 @@ function onQueueAdd(value) {
     var ay2 = 256 + 88;
     drawn.push(paper.path(["M", ax1, ay1, "H", ax2]).attr("stroke", "gray").attr("stroke-width", "2").attr("arrow-end", "block-wide-long"));
     drawn.push(paper.path(["M", ax2, ay2, "H", ax1]).attr("stroke", "gray").attr("stroke-width", "2").attr("arrow-end", "block-wide-long"));
-    var image = "icons/queue.png";
-    value = wrapLongString(value, 12);
-    drawn.push(paper.image(image, paper.width - 138, 256, 128, 96));
-    drawn.push(paper.rect(ax2, 256, 128, 128).attr("stroke", "#088"));
-    drawn.push(paper.text(ax2 + 64, 256 + 108, value).attr("font-size", 10));
+    if (value != "Apache Kafka") {
+        var image = "icons/queue.png";
+        value = wrapLongString(value, 12);
+        drawn.push(paper.image(image, paper.width - 138 + 32, 256 + 20, 64, 42));
+        drawn.push(paper.rect(ax2, 256, 128, 128).attr("stroke", "#088"));
+        drawn.push(paper.text(ax2 + 64, 256 + 108, value).attr("font-size", 10));
+    } else {
+        var image = "icons/kafka.jpg";
+        value = wrapLongString(value, 12);
+        drawn.push(paper.image(image, paper.width - 138 + 32, 256+5, 64, 90));
+        drawn.push(paper.rect(ax2, 256, 128, 128).attr("stroke", "#088"));
+        drawn.push(paper.text(ax2 + 64, 256 + 108, value).attr("font-size", 10));
+    }
 
 }
 
@@ -372,6 +380,11 @@ function onAddApplicationPart(language, configuration, drop_down_id) {
     var value = readDropDownValue(drop_down_id);
     console.log("value:    " + value);
 
+    // ignore special first value
+    if (value == "(please choose)") {
+        return;
+    }
+
     switch (configuration) {
     case "Web service framework":
         onFrameworkAdd(value);
@@ -380,6 +393,7 @@ function onAddApplicationPart(language, configuration, drop_down_id) {
         onDatabaseAdd(value);
         break;
     case "Message queuing service":
+    case "Streaming platform":
         onQueueAdd(value);
         break;
     case "Other interfaces":
@@ -402,6 +416,7 @@ function onRemoveApplicationPart(language, configuration, drop_down_id) {
         onDatabaseRemove(value);
         break;
     case "Message queuing service":
+    case "Streaming platform":
         onQueueRemove(value);
         break;
     case "Other interfaces":
