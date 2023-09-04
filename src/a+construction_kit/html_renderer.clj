@@ -164,6 +164,44 @@
     ] ; </body>
   ))
 
+(defn render-desktop-app-page
+  []
+  (page/xhtml
+    (widgets/header "/" {:include-raphael false})
+    [:body {:style "padding-top:50px"}
+     [:div {:class "container"}
+          (widgets/navigation-bar "/")
+          [:h3 "Desktop application"]
+          [:br]
+          [:div {:class "alert alert-danger" :role "alert"}
+             "Sorry: this application type is not (yet) supported by A+ Construction Kit"
+          ]
+          (widgets/back-button)
+          [:div {:style "height: 10ex"}]
+          (widgets/footer)
+            ] ; </div class="container">
+        ] ; </body>
+))
+
+(defn render-cli-app-page
+  []
+  (page/xhtml
+    (widgets/header "/" {:include-raphael false})
+    [:body {:style "padding-top:50px"}
+     [:div {:class "container"}
+          (widgets/navigation-bar "/")
+          [:h3 "CLI Tool"]
+          [:br]
+          [:div {:class "alert alert-danger" :role "alert"}
+             "Sorry: this application type is not (yet) supported by A+ Construction Kit"
+          ]
+          (widgets/back-button)
+          [:div {:style "height: 10ex"}]
+          (widgets/footer)
+            ] ; </div class="container">
+        ] ; </body>
+))
+
 (defn render-app-type
   [app-type]
   (.toLowerCase app-type))
@@ -259,7 +297,7 @@
 (defn render-cli-tool-config
   [primary-language configuration subgroups config-values])
 
-(defn render-openshift-cron-job-config
+(defn render-cron-job-config
   [primary-language configuration subgroups config-values])
 
 (defn render-desktop-config
@@ -276,8 +314,8 @@
         (render-desktop-config (get languages "primary-language") configurations subgroups config-values)
         "cli-tool"
         (render-cli-tool-config (get languages "primary-language") configurations subgroups config-values)
-        "openshift-cron-job"
-        (render-openshift-cron-job-config (get languages "primary-language") configurations subgroups config-values)
+        "cron-job"
+        (render-cron-job-config (get languages "primary-language") configurations subgroups config-values)
     ))
 
 

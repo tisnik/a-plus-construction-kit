@@ -62,10 +62,19 @@
   (let [params         (:params request)
         app-type       (get params "app-type")
         app-type-label (app-type-name->label model/app-types app-type)]
-    (finish-processing
-      request
-      (html-renderer/render-select-deployment-page app-type
-                                                   app-type-label model/deployment-types))))
+    (case app-type
+      "desktop"
+        (finish-processing
+          request
+          (html-renderer/render-desktop-app-page))
+      "cli-tool"
+        (finish-processing
+          request
+          (html-renderer/render-cli-app-page))
+        (finish-processing
+          request
+          (html-renderer/render-select-deployment-page app-type
+                                                       app-type-label model/deployment-types)))))
 
 (defn read-languages
   [params]

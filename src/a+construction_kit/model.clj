@@ -25,8 +25,8 @@
       :name  "microservice"}
      {:label "Web application"
       :name  "web-application"}
-     {:label "OpenShift CRON job"
-      :name  "openshift-cron-job"}
+     {:label "CRON job"
+      :name  "cron-job"}
      {:label "Desktop app with GUI"
       :name  "desktop"}
      {:label "CLI tool"
@@ -41,7 +41,7 @@
                         ["Java" "C#" "Python" "JavaScript" "TypeScript" "Go" "Rust"]
                       "Front end"
                         ["JavaScript" "TypeScript"]}
-   "openshift-cron-job" ["Java" "Python" "JavaScript" "TypeScript" "Go" "BASH"]
+   "cron-job"           ["Java" "Python" "JavaScript" "TypeScript" "Go" "BASH"]
    "desktop"            ["Java" "C#" "Python" "C" "C++" "Go"]
    "cli-tool"           ["Java" "C#" "Python" "C" "C++" "Go" "BASH"]})
 
