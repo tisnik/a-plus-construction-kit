@@ -57,6 +57,16 @@
       :label))
 
 
+(defn process-select-deployment
+  [request]
+  (let [params         (:params request)
+        app-type       (get params "app-type")
+        app-type-label (app-type-name->label model/app-types app-type)]
+    (finish-processing
+      request
+      (html-renderer/render-select-deployment-page app-type
+                                                   app-type-label model/deployment-types))))
+
 (defn read-languages
   [params]
   (->> (filter #(.endsWith (key %) "-language") params)
@@ -143,6 +153,7 @@
           "/"                           (process-index-page request)
           "/documentation"              (process-documentation-page request)
           "/select-app-type"            (process-select-app-page request)
+          "/select-deployment"          (process-select-deployment request)
           "/select-language"            (process-select-language-page request)
           "/configure-modules"          (process-configure-modules-page request)
           "/finish"                     (process-finish-construction request)
