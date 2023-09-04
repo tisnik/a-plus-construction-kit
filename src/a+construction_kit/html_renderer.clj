@@ -282,7 +282,7 @@
 
 
 (defn render-configure-modules-page
-  [app-type app-type-label languages configurations subgroups config-values]
+  [app-type app-type-label deployment-type languages configurations subgroups config-values]
   (page/xhtml
     (widgets/header "/" {:include-raphael true})
     [:body {:style "padding-top:50px"}
@@ -295,6 +295,11 @@
           (form/form-to
                 {:name "service_configuration"}
                 [:get "/finish"]
+                [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
+                [:input {:type "hidden" :name "deployment-type" :id "deployment-type" :value deployment-type}]
+                [:input {:type "hidden" :name "primary-language" :id "primary-language" :value (get languages "primary-language")}]
+                [:input {:type "hidden" :name "front-end-language" :id "front-end-language" :value (get languages "front-end-language")}]
+                [:input {:type "hidden" :name "back-end-language" :id "back-end-language" :value (get languages "back-end-language")}]
                 [:div {:class "column"}
                      (widgets/canvas)]
                 [:div {:class "column"}

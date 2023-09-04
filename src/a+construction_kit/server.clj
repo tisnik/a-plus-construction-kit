@@ -111,6 +111,7 @@
   (let [params             (:params request)
         app-type           (get params "app-type")
         app-type-label     (app-type-name->label model/app-types app-type)
+        deployment-type    (get params "deployment-type")
         languages          (read-languages params)
         configurations     (get model/configurations app-type)
         subgroups          model/subgroups
@@ -119,6 +120,7 @@
       request
       (html-renderer/render-configure-modules-page app-type
                                                    app-type-label
+                                                   deployment-type
                                                    languages
                                                    configurations
                                                    subgroups
