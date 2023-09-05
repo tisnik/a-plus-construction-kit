@@ -67,6 +67,7 @@
            [:li [:a {:href "/motivation.html"} "Motivation"]]
            [:li [:a {:href "/solution.html"} "Solution"]]
            [:li [:a {:href "/references.html"} "References"]]
+           [:li [:a {:href "/why.html"} "Why the name 'A+ Construction Kit' was choosed?"]]
           ]
           [:br]
           (widgets/back-button)
@@ -212,7 +213,7 @@
 
 (defn render-select-language-page
   "Render the page with the selection of language or languages to use for the app."
-  [app-type app-type-label deployment-type app-parts app-languages]
+  [app-type app-type-label deployment-type app-parts app-languages next-page]
   (page/xhtml
     (widgets/header "/" {:include-raphael false})
     [:body {:style "padding-top:50px"}
@@ -220,7 +221,7 @@
           (widgets/navigation-bar "/")
           [:h3 "Language selection for " (render-app-type app-type-label)]
                 [:br]
-                (form/form-to {:name "inputForm"} [:get "/configure-modules"]
+                (form/form-to {:name "inputForm"} [:get next-page]
                     [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
                     [:input {:type "hidden" :name "deployment-type" :id "deployment-type" :value deployment-type}]
                     (if app-parts
@@ -335,10 +336,10 @@
           (widgets/navigation-bar "/")
           [:h3 "Modules for " (render-app-type app-type-label) " written in " (render-languages languages)]
           [:br]
-          [:div {:class "row"}
           (form/form-to
                 {:name "service_configuration"}
                 [:get "/finish"]
+                [:div {:class "row"}
                 [:input {:type "hidden" :name "app-type" :id "app-type" :value app-type}]
                 [:input {:type "hidden" :name "deployment-type" :id "deployment-type" :value deployment-type}]
                 [:input {:type "hidden" :name "primary-language" :id "primary-language" :value (get languages "primary-language")}]
@@ -352,12 +353,12 @@
                                                     configurations
                                                     subgroups
                                                     config-values)]
+                ]
                 [:div {:style "height: 5ex"}]
                 (widgets/submit-button "Finish" "finish" "finish")
                 [:span "&nbsp;"]
                 (widgets/back-button)
                 [:br])
-          ]
           (widgets/footer)
           (let [langs-json (json/write-str languages)]
                 [:script (str "window.onload = function() {

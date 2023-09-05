@@ -98,6 +98,12 @@
       (html-renderer/render-documentation-page)))
 
 
+(defn from-select-language-to-next-page
+  [app-type]
+  (if (= app-type "cron-job")
+    "/finish"
+    "/configure-modules"))
+
 (defn process-select-language-page
   [request]
   (let [params          (:params request)
@@ -105,14 +111,16 @@
         app-type-label  (app-type-name->label model/app-types app-type)
         deployment-type (get params "deployment-type")
         app-parts       (get model/app-parts app-type)
-        app-languages   (get model/app-languages app-type)]
+        app-languages   (get model/app-languages app-type)
+        next-page       (from-select-language-to-next-page app-type)]
     (finish-processing
       request
       (html-renderer/render-select-language-page app-type
                                                  app-type-label
                                                  deployment-type
                                                  app-parts
-                                                 app-languages))))
+                                                 app-languages
+                                                 next-page))))
 
 
 (defn process-configure-modules-page
