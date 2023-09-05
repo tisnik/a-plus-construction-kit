@@ -21,9 +21,10 @@
 
 (require '[clj-http-utils.http-utils :as http-utils])
 
-(require '[ack.html-renderer :as html-renderer])
-(require '[ack.config        :as config])
-(require '[ack.model         :as model])
+(require '[ack.html-renderer  :as html-renderer])
+(require '[ack.config         :as config])
+(require '[ack.model          :as model])
+(require '[ack.todo-generator :as todo-generator])
 
 (use '[clj-utils.utils])
 
@@ -145,11 +146,14 @@
 
 (defn process-finish-construction
   [request]
-  (let [params             (:params request)]
+  (let [params    (:params request)
+        todo-list (todo-generator/generate-todo-list params)]
     (println params)
+    (println "----------")
+    (println todo-list)
     (finish-processing
       request
-      (html-renderer/render-finish-construction-page))))
+      (html-renderer/render-finish-construction-page params todo-list))))
 
 (defn uri->file-name
   [uri]

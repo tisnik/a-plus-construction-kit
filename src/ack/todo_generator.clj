@@ -10,6 +10,14 @@
 ;      Pavel Tisnovsky
 ;
 
-(ns ack.todo-generator)
+(ns ack.todo-generator
+  "Module that generates all the TODO tasks based on user configuration.
+  
+  Author: Pavel Tisnovsky")
 
+
+(defn generate-todo-list
+  [params]
+  [{:first "todo"}
+   ])
 

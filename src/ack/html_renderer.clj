@@ -372,7 +372,7 @@
 
 (defn render-finish-construction-page
   "Render 'finish construction' page."
-  []
+  [params todo-list]
   (page/xhtml
     (widgets/header "/" {:include-raphael false})
     [:body
