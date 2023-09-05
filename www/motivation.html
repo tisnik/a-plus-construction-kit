@@ -28,6 +28,33 @@
         </nav>
         <h3>Motivation</h3>
 
+        <p>Let's suppose that developer need to create and deploy simple web
+        service to cloud. The implementation of that service might take some
+        time, let's say one day. We could argue that developer's work is done
+        at this point.</p>
+
+        <p>The problem, however, is that many other things needs to be finished
+        to successfully deploy such web service. Namely:</p>
+
+        <ul>
+        <li>Interfaces to data storage or storages needs to be configured properly.</li>
+        <li>Interfaces to streaming tools usually needs to be configured too.</li>
+        <li>Dtto if the web service has to talk with other services via some message broker.</li>
+        <li>Logging needs to be configured.</li>
+        <li>Alerts needs to be configured.</li>
+        <li>Dashboard or with service metrics needs to be created.</li>
+        <li>And the service itself needs to be deployed to selected cloud, of course.</li>
+        </ul>
+
+        <div class="alert alert-warning" role="alert">
+        For smaller web services (and we live in microservices world after all)
+        it might mean, that time to deliver the service might be five to ten
+        times longer than the solution (algorithm, source code) itself!
+        </div>
+
+        <p>Clearly there's space for a tool that take care of all those "minor"
+        tasks that have to be done.</p>
+
         <button class="btn btn-primary" onclick="window.history.back()" style="width:12em" type="button">Back</button>
         <div style="height: 10ex"></div>
         <div><br /><br />&copy; Pavel Tisnovsky, Red Hat</div>
