@@ -386,8 +386,17 @@
               [:div {:style "height: 2ex"}]
               [:h4  (:title todo-item)]
               [:div (:description todo-item)]
+              (if (:list-of-files todo-item)
+                [:span "List of added or changed files"
+                 [:ol
+                  (for [file (:list-of-files todo-item)]
+                    [:li [:code file]])
+                  ]
+                 ]
+                )
               (if (:command todo-item)
-                [:pre [:code (:command todo-item)]])
+                [:span "Command(s) to be executed:"
+                [:pre [:code (:command todo-item)]]])
               (if (:download todo-item)
                 [:div [:a {:href (:download todo-item)} "Download available support files"]])
             ])
