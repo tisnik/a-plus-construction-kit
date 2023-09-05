@@ -67,15 +67,13 @@
 ]); </nav>
 
 
-(defn footer
+(def footer
   "Renders part of HTML page - the footer."
-  []
   [:div "<br /><br />&copy; Pavel Tisnovsky, Red Hat"])
 
 
-(defn back-button
+(def back-button
   "Back button widget."
-  []
   [:button {:class "btn btn-primary",
             :onclick "window.history.back()",
             :type "button",
@@ -135,8 +133,7 @@
   [:a {:href help-page-url} [:img {:src "icons/help.gif"}]])
 
 
-(defn canvas
-  []
+(def canvas
   [:div {:id "canvas_container"}])
 
 (defn drop-down
@@ -144,3 +141,9 @@
   (form/drop-down {:id drop-down-id, :class "select"}
                   drop-down-id
                   drop-down-values))
+
+(def short-vertical-separator
+  [:div {:style "height: 2ex"}])
+
+(def tall-vertical-separator
+  [:div {:style "height: 10ex"}])
