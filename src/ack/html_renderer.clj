@@ -48,7 +48,7 @@
                 [:get "/documentation"]
                    (widgets/submit-button "Documentation" "about" "about")
                 [:br])
-          (widgets/footer)
+          widgets/footer
      ] ; </div class="container">
     ] ; </body>
   ))
@@ -70,9 +70,9 @@
            [:li [:a {:href "/why.html"} "Why the name 'A+ Construction Kit' was choosed?"]]
           ]
           [:br]
-          (widgets/back-button)
+          widgets/back-button
           [:div {:style "height: 10ex"}]
-          (widgets/footer)
+          widgets/footer
      ] ; </div class="container">
     ] ; </body>
   ))
@@ -95,9 +95,9 @@
                    (widgets/submit-button (:label app-type) "app-type" (:name app-type))
                    [:br]
                    [:br]]))
-          (widgets/back-button)
+          widgets/back-button
           [:div {:style "height: 10ex"}]
-          (widgets/footer)
+          widgets/footer
         ] ; </div class="container">
     ] ; </body>
   ))
@@ -133,9 +133,9 @@
                 [:br]
                 [:br]
           )
-          (widgets/back-button)
+          widgets/back-button
           [:div {:style "height: 10ex"}]
-          (widgets/footer)
+          widgets/footer
         ] ; </div class="container">
     ] ; </body>
   ))
@@ -158,9 +158,9 @@
                    (widgets/submit-button (:label app-type) "app-type" (:name app-type))
                    [:br]
                    [:br]]))
-          (widgets/back-button)
+          widgets/back-button
           [:div {:style "height: 10ex"}]
-          (widgets/footer)
+          widgets/footer
         ] ; </div class="container">
     ] ; </body>
   ))
@@ -177,9 +177,9 @@
           [:div {:class "alert alert-danger" :role "alert"}
              "Sorry: this application type is not (yet) supported by A+ Construction Kit"
           ]
-          (widgets/back-button)
+          widgets/back-button
           [:div {:style "height: 10ex"}]
-          (widgets/footer)
+          widgets/footer
             ] ; </div class="container">
         ] ; </body>
 ))
@@ -196,9 +196,9 @@
           [:div {:class "alert alert-danger" :role "alert"}
              "Sorry: this application type is not (yet) supported by A+ Construction Kit"
           ]
-          (widgets/back-button)
+          widgets/back-button
           [:div {:style "height: 10ex"}]
-          (widgets/footer)
+          widgets/footer
             ] ; </div class="container">
         ] ; </body>
 ))
@@ -249,9 +249,9 @@
                         [:br]
                         (widgets/disabled-submit-button "Next" "next" "next"))
                         [:br]
-                        (widgets/back-button)
+                        widgets/back-button
                 [:div {:style "height: 10ex"}]
-                (widgets/footer)
+                widgets/footer
             ] ; </div class="container">
         ] ; </body>
 ))
@@ -346,7 +346,7 @@
                 [:input {:type "hidden" :name "front-end-language" :id "front-end-language" :value (get languages "front-end-language")}]
                 [:input {:type "hidden" :name "back-end-language" :id "back-end-language" :value (get languages "back-end-language")}]
                 [:div {:class "column"}
-                     (widgets/canvas)]
+                     widgets/canvas]
                 [:div {:class "column"}
                      (render-configure-modules-form app-type
                                                     languages
@@ -357,9 +357,9 @@
                 [:div {:style "height: 5ex"}]
                 (widgets/submit-button "Finish" "finish" "finish")
                 [:span "&nbsp;"]
-                (widgets/back-button)
+                widgets/back-button
                 [:br])
-          (widgets/footer)
+          widgets/footer
           (let [langs-json (json/write-str languages)]
                 [:script (str "window.onload = function() {
                               createPaper(640, 640);
@@ -379,8 +379,22 @@
      [:div {:class "container"}
           (widgets/navigation-bar "/")
           [:h3 "Finish application construction"]
+          [:div "The following tasks need to be performed in order to deploy application to selected cloud provider"]
+          (for [todo-item todo-list]
+            [:span
+              widgets/short-vertical-separator
+              [:div {:style "height: 2ex"}]
+              [:h4  (:title todo-item)]
+              [:div (:description todo-item)]
+              (if (:command todo-item)
+                [:pre [:code (:command todo-item)]])
+              (if (:download todo-item)
+                [:div [:a {:href (:download todo-item)} "Download available support files"]])
+            ])
           [:div {:style "height: 10ex"}]
-          (widgets/footer)
+          widgets/back-button
+          [:br]
+          widgets/footer
      ] ; </div class="container">
     ] ; </body>
   ))
