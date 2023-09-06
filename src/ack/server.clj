@@ -148,15 +148,18 @@
   [request]
   (let [params    (:params request)
         model     (todo-generator/generate-model params)
-        todo-list (todo-generator/generate-todo-list model)]
+        todo-list (todo-generator/generate-todo-list model)
+        warnings  (todo-generator/generate-warnings model)]
     (println params)
     (println "----------")
     (println todo-list)
     (println "----------")
     (println model)
+    (println "----------")
+    (println warnings)
     (finish-processing
       request
-      (html-renderer/render-finish-construction-page params model todo-list))))
+      (html-renderer/render-finish-construction-page params model todo-list warnings))))
 
 (defn uri->file-name
   [uri]

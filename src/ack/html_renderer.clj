@@ -374,7 +374,7 @@
 
 (defn render-finish-construction-page
   "Render 'finish construction' page."
-  [params model todo-list]
+  [params model todo-list warnings]
   (page/xhtml
     (widgets/header "/" {:include-raphael false})
     [:body
@@ -385,7 +385,6 @@
           (for [todo-item todo-list]
             [:span
               widgets/short-vertical-separator
-              [:div {:style "height: 2ex"}]
               [:h4  (:title todo-item)]
               [:div (:description todo-item)]
               (if (:list-of-files todo-item)
@@ -401,6 +400,14 @@
                 [:pre [:code (:command todo-item)]]])
               (if (:download todo-item)
                 [:div [:a {:href (:download todo-item)} "Download available support files"]])
+            ])
+          widgets/tall-vertical-separator
+           [:h3 "Warnings"]
+          (for [warning warnings]
+            [:span
+              widgets/short-vertical-separator
+              [:h4  (:title warning)]
+              [:div {:class "alert alert-danger" :role "alert"} (:description warning)]
             ])
           widgets/tall-vertical-separator
            [:h3 "Model"]
