@@ -17,6 +17,8 @@
 
 
 (require '[clojure.string :as str])
+(require '[clojure.pprint :as pprint])
+
 (require '[hiccup.page :as page])
 (require '[hiccup.form :as form])
 
@@ -71,7 +73,7 @@
           ]
           [:br]
           widgets/back-button
-          [:div {:style "height: 10ex"}]
+          widgets/tall-vertical-separator
           widgets/footer
      ] ; </div class="container">
     ] ; </body>
@@ -96,7 +98,7 @@
                    [:br]
                    [:br]]))
           widgets/back-button
-          [:div {:style "height: 10ex"}]
+          widgets/tall-vertical-separator
           widgets/footer
         ] ; </div class="container">
     ] ; </body>
@@ -134,7 +136,7 @@
                 [:br]
           )
           widgets/back-button
-          [:div {:style "height: 10ex"}]
+          widgets/tall-vertical-separator
           widgets/footer
         ] ; </div class="container">
     ] ; </body>
@@ -159,7 +161,7 @@
                    [:br]
                    [:br]]))
           widgets/back-button
-          [:div {:style "height: 10ex"}]
+          widgets/tall-vertical-separator
           widgets/footer
         ] ; </div class="container">
     ] ; </body>
@@ -178,7 +180,7 @@
              "Sorry: this application type is not (yet) supported by A+ Construction Kit"
           ]
           widgets/back-button
-          [:div {:style "height: 10ex"}]
+          widgets/tall-vertical-separator
           widgets/footer
             ] ; </div class="container">
         ] ; </body>
@@ -250,7 +252,7 @@
                         (widgets/disabled-submit-button "Next" "next" "next"))
                         [:br]
                         widgets/back-button
-                [:div {:style "height: 10ex"}]
+                widgets/tall-vertical-separator
                 widgets/footer
             ] ; </div class="container">
         ] ; </body>
@@ -372,7 +374,7 @@
 
 (defn render-finish-construction-page
   "Render 'finish construction' page."
-  [params todo-list]
+  [params model todo-list]
   (page/xhtml
     (widgets/header "/" {:include-raphael false})
     [:body
@@ -400,7 +402,12 @@
               (if (:download todo-item)
                 [:div [:a {:href (:download todo-item)} "Download available support files"]])
             ])
-          [:div {:style "height: 10ex"}]
+          widgets/tall-vertical-separator
+           [:h3 "Model"]
+           [:div [:pre
+                  (with-out-str (pprint/pprint model))
+           ]]
+          widgets/tall-vertical-separator
           widgets/back-button
           [:br]
           widgets/footer
