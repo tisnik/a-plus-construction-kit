@@ -147,13 +147,16 @@
 (defn process-finish-construction
   [request]
   (let [params    (:params request)
-        todo-list (todo-generator/generate-todo-list params)]
+        model     (todo-generator/generate-model params)
+        todo-list (todo-generator/generate-todo-list model)]
     (println params)
     (println "----------")
     (println todo-list)
+    (println "----------")
+    (println model)
     (finish-processing
       request
-      (html-renderer/render-finish-construction-page params todo-list))))
+      (html-renderer/render-finish-construction-page params model todo-list))))
 
 (defn uri->file-name
   [uri]
