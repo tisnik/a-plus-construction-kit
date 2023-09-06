@@ -147,3 +147,8 @@
 
 (def tall-vertical-separator
   [:div {:style "height: 10ex"}])
+
+(defn warning-div
+  [text]
+  [:div {:class "alert alert-danger" :role "alert"} text])
+

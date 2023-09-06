@@ -407,7 +407,7 @@
             [:span
               widgets/short-vertical-separator
               [:h4  (:title warning)]
-              [:div {:class "alert alert-danger" :role "alert"} (:description warning)]
+              (widgets/warning-div (:description warning))
             ])
           widgets/tall-vertical-separator
            [:h3 "Model"]
