@@ -178,6 +178,16 @@
   ])
 
 
+(defn generate-warnings
+  [model]
+  [
+   {:title "foo"
+    :description "bar"}
+   {:title "baz"
+    :description "bar"}
+   ])
+
+
 (comment
 
 (require '[clojure.pprint :as pprint])
