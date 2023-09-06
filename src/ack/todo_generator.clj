@@ -61,7 +61,7 @@
    :Gorilla-Toolkit {:title         "Gorilla Toolkit dependency"
                      :description   "Gorilla Toolkit package will be added into the project"
                      :list-of-files ["gorilla_interface.go" "go.mod" "go.sum"]
-                     :command       "go get github.com/gorilla"
+                     :command       "go get github.com/gorilla\ngo mod tidy"
                      :download      nil}
    })
 
@@ -73,12 +73,38 @@
                      :list-of-files nil
                      :command       nil
                      :download      nil}
+   :zerolog         {:title         "Zerolog library dependency"
+                     :description   "Zerolog library will be added into the project"
+                     :list-of-files ["go.mod" "go.sum"]
+                     :command       "go get github.com/zerolog\ngo mod tidy"
+                     :download      nil}
+   })
+
+
+(def add-streaming-platform
+  {
+   :Apache-Kafka  {:title         "Interface to Apache Kafka"
+                   :description   "Interface to Apache Kafka will be added as a dependency. Configuration will be changed as well."
+                   :list-of-files ["kafka.go" "go.mod" "go.sum" "config.toml" "server.properties" "zookeeper.properties"]
+                   :command       "go get github.com/sarama\ngo mod tidy\ncd kafka\nbin/kafka-server-start.sh config/server.properties\nbin/zookeeper-server-start.sh config/zookeeper.properties"
+                   :download      nil}
+   :JetStream     {:title         "Interface to JetStream"
+                   :description   "Interface to JetStream will be added as a dependency. Configuration will be changed as well."
+                   :list-of-files ["nats.cfg"]
+                   :command       "nats redis.cfg"
+                   :download      nil}
+   :Redis-streams {:title         "Interface to Redis Streams"
+                   :description   "Interface to Redis Streams will be added as a dependency. Configuration will be changed as well."
+                   :list-of-files ["redis.go" "go.mod" "go.sum" "config.toml" "redis.cfg"]
+                   :command       "go get github.com/redis\ngo mod tidy\nredis-server redis.cfg"
+                   :download      nil}
    })
 
 
 (defn get-item
   [input item]
-  (-> input item (string/replace " " "-") keyword))
+  (if item
+    (-> input item (string/replace " " "-") keyword)))
 
 
 (defn todo-item
@@ -86,16 +112,23 @@
   ((get-item input item) dict))
 
 
-(defn generate-todo-list
+(defn generate-model
   [params]
-  (let [input (walk/keywordize-keys params)]
-  [
-   (todo-item input :primary-language      project-stub)
-   (todo-item input :web_service_framework add-web-service-framework)
-   (todo-item input :logging               add-logging-library)
-   (todo-item input :deployment-type       deployment-type)
-  ]))
+  (let [transformed (walk/keywordize-keys params)]
+    (into {}
+          (for [[k v] transformed]
+            [k (if (or (= v "(please choose)") (= v "")) nil v)]))))
 
+
+(defn generate-todo-list
+  [model]
+  [
+   (todo-item model :primary-language      project-stub)
+   (todo-item model :web_service_framework add-web-service-framework)
+   (todo-item model :streaming_platform    add-streaming-platform)
+   (todo-item model :logging               add-logging-library)
+   (todo-item model :deployment-type       deployment-type)
+  ])
 
 
 (comment
@@ -116,7 +149,6 @@
    "front-end-language"         ""
    "deployment-type"            "aws"
    "web_service_framework"      "Gorilla Toolkit"
-
    "logging"                    "log"
    "alerting"                   "(please choose)"
    "ci"                         "Jenkins"
