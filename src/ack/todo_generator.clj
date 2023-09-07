@@ -180,12 +180,13 @@
 
 (defn generate-warnings
   [model]
-  [
-   {:title "foo"
-    :description "bar"}
-   {:title "baz"
-    :description "bar"}
-   ])
+  (let [warnings (transient [])]
+    (if-not (:web_service_framework model) (conj! warnings {:title "Web service framework not setup" :description "Project is missing web service framework"}))
+    (if-not (:logging model)               (conj! warnings {:title "Log library is not selected" :description "Would be nice to select logging library"}))
+    (if-not (:monitoring model)            (conj! warnings {:title "Monitoring is not configured" :description "Would be nice to setup monitoring solution"}))
+    (if-not (:alerting model)              (conj! warnings {:title "Alerting is not configured" :description "Would be nice to setup alerting solution"}))
+    (persistent! warnings)))
+
 
 
 (comment
