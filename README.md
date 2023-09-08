@@ -31,7 +31,7 @@ from "somewhere". It would be much better to have a more intelligent solution.
 Clearly there's space for a tool that take care of all those "minor" tasks that
 have to be done.
 
-![https://github.com/tisnik/a-plus-construction-kit/blob/master/www/code_is_not_all.png]
+!(https://github.com/tisnik/a-plus-construction-kit/blob/master/www/code_is_not_all.png)
 
 
 ## Solution
@@ -57,7 +57,7 @@ The following things can be created automatically based on schema provided:
 
 ## Look
 
-![https://github.com/tisnik/a-plus-construction-kit/blob/master/www/schema.png]
+!(https://github.com/tisnik/a-plus-construction-kit/blob/master/www/schema.png)
 
 ## Installation
 
