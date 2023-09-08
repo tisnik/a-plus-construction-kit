@@ -17,16 +17,47 @@ successfully deploy such web service. Namely:
 - Logging needs to be configured.
 - Alerts needs to be configured.
 - Dashboard or with service metrics needs to be created.
+- Connection to tracking tool.
+- CI/CD setup.
 - And the service itself needs to be deployed to selected cloud, of course.
 
 For smaller web services (and we live in microservices world after all) it
 might mean, that time to deliver the service might be five to ten times longer
 than the solution (algorithm, source code) itself!
 
+Also, many project setup and configuration is done by copy&pasting old code
+from "somewhere". It would be much better to have a more intelligent solution.
+
 Clearly there's space for a tool that take care of all those "minor" tasks that
 have to be done.
 
+![https://github.com/tisnik/a-plus-construction-kit/blob/master/www/code_is_not_all.png]
 
+
+## Solution
+
+The problem can be split into two parts:
+
+1. Code itself.
+1. Configuration, interfaces to external services, and deployment.
+
+The first part can not be automated, but the second part can be fully created by computer, based on provided "schema".
+
+The "schema" is basically architecture of service or microservice created by user:
+
+The following things can be created automatically based on schema provided:
+
+- Project stub for selected language
+- Dependency setup for selected language
+- Interfaces to storage, streaming platforms, message brokers
+- Interfaces to other systems (Prometheus/Grafana etc.)
+- Deployment configuration
+- Deployment scripts
+
+
+## Look
+
+![https://github.com/tisnik/a-plus-construction-kit/blob/master/www/schema.png]
 
 ## Installation
 
