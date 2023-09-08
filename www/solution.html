@@ -28,6 +28,30 @@
         </nav>
         <h3>Solution</h3>
 
+        <p>The problem can be split into two parts:</p>
+
+        <ol>
+            <li>Code itself.</li>
+            <li>Configuration, interfaces to external services, and deployment.</li>
+        </ol>
+
+        <p>The first part can not be automated, but the second part can be fully created by computer, based on provided "schema".</p>
+
+        <p>The "schema" is basically architecture of service or microservice created by user:</p>
+
+        <img src="/schema.png" width="80%" />
+
+        <p>The following things can be created automatically based on schema provided:</p>
+
+        <ol>
+            <li>Project stub for selected language</li>
+            <li>Dependency setup for selected language</li>
+            <li>Interfaces to storage, streaming platforms, message brokers</li>
+            <li>Interfaces to other systems (Prometheus/Grafana etc.)</li>
+            <li>Deployment configuration</li>
+            <li>Deployment scripts</li>
+        </ol>
+
         <button class="btn btn-primary" onclick="window.history.back()" style="width:12em" type="button">Back</button>
         <div style="height: 10ex"></div>
         <div><br /><br />&copy; Pavel Tisnovsky, Red Hat</div>
