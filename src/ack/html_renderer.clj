@@ -68,6 +68,7 @@
            [:li [:a {:href "/about.html"} "About"]]
            [:li [:a {:href "/motivation.html"} "Motivation"]]
            [:li [:a {:href "/solution.html"} "Solution"]]
+           [:li [:a {:href "/technologies.html"} "Technologies used"]]
            [:li [:a {:href "/references.html"} "References"]]
            [:li [:a {:href "/why.html"} "Why the name 'A+ Construction Kit' was choosed?"]]
           ]
