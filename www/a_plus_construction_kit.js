@@ -1,21 +1,21 @@
 function enableNextButton() {
-  var button = document.getElementById("next");
+  const button = document.getElementById('next');
   button.disabled = false;
 }
 
-var language_parts = {};
+const language_parts = {};
 
 function languagePartSelected(part, app_parts) {
   language_parts[part] = true;
-  var cnt = Object.keys(language_parts).length;
+  const cnt = Object.keys(language_parts).length;
   if (cnt >= app_parts) {
     enableNextButton();
   }
 }
 
 function onSelectPrimaryLanguageIcon(language) {
-  var id = "primary-language" + "-" + language;
-  var element = document.getElementById(id);
+  const id = 'primary-language' + '-' + language;
+  const element = document.getElementById(id);
   if (element != null) {
     element.checked = true;
     enableNextButton();
@@ -23,8 +23,8 @@ function onSelectPrimaryLanguageIcon(language) {
 }
 
 function onSelectLanguagePartIcon(part, language, app_parts) {
-  var id = part + "-language" + "-" + language;
-  var element = document.getElementById(id);
+  const id = part + '-language' + '-' + language;
+  const element = document.getElementById(id);
   if (element != null) {
     element.checked = true;
   }
@@ -32,8 +32,8 @@ function onSelectLanguagePartIcon(part, language, app_parts) {
 }
 
 function onSelectDeploymentTypeIcon(deploymentType) {
-  var id = "deployment-type" + "-" + deploymentType;
-  var element = document.getElementById(id);
+  const id = 'deployment-type' + '-' + deploymentType;
+  const element = document.getElementById(id);
   if (element != null) {
     element.checked = true;
     enableNextButton();
@@ -41,7 +41,7 @@ function onSelectDeploymentTypeIcon(deploymentType) {
 }
 
 function readDropDownValue(drop_down_id) {
-  var drop_down = document.getElementById(drop_down_id);
+  const drop_down = document.getElementById(drop_down_id);
   return drop_down.options[drop_down.selectedIndex].value;
 }
 
