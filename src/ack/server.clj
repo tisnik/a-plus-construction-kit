@@ -124,6 +124,12 @@
                                                  next-page))))
 
 
+(defn supported-language-for-microservice
+  [languages]
+  (let [language (get languages "primary-language")]
+    (println language)
+    (or (= language "Python") (= language "Go"))))
+
 (defn process-configure-modules-page
   [request]
   (let [params             (:params request)
@@ -134,15 +140,23 @@
         configurations     (get model/configurations app-type)
         subgroups          model/subgroups
         config-values      model/config-values]
-    (finish-processing
-      request
-      (html-renderer/render-configure-modules-page app-type
-                                                   app-type-label
-                                                   deployment-type
-                                                   languages
-                                                   configurations
-                                                   subgroups
-                                                   config-values))))
+    (if (= app-type "microservice")
+      (if (supported-language-for-microservice languages)
+          (finish-processing
+            request
+            (html-renderer/render-configure-modules-page app-type
+                                                         app-type-label
+                                                         deployment-type
+                                                         languages
+                                                         configurations
+                                                         subgroups
+                                                         config-values))
+          (finish-processing
+            request
+            (html-renderer/render-unsupported-language app-type
+                                                       app-type-label
+                                                       languages))
+          ))))
 
 (defn process-finish-construction
   [request]
