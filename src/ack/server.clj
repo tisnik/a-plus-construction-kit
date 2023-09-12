@@ -155,8 +155,12 @@
             request
             (html-renderer/render-unsupported-language app-type
                                                        app-type-label
-                                                       languages))
-          ))))
+                                                       languages)))
+        (finish-processing
+          request
+          (html-renderer/render-unsupported-app-type app-type
+                                                     app-type-label))
+          )))
 
 (defn process-finish-construction
   [request]

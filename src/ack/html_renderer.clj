@@ -187,6 +187,25 @@
         ] ; </body>
 ))
 
+(defn render-unsupported-app-type
+  [app-type app-type-label]
+  (page/xhtml
+    (widgets/header "/" {:include-raphael false})
+    [:body {:style "padding-top:50px"}
+     [:div {:class "container"}
+          (widgets/navigation-bar "/")
+          [:h3 app-type-label]
+          [:br]
+          [:div {:class "alert alert-danger" :role "alert"}
+             "Sorry: this application type is not (yet) fully supported by A+ Construction Kit"
+          ]
+          widgets/back-button
+          widgets/tall-vertical-separator
+          widgets/footer
+            ] ; </div class="container">
+        ] ; </body>
+))
+
 (defn render-desktop-app-page
   []
   (page/xhtml
